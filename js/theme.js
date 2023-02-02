@@ -1,3 +1,7 @@
+/**
+ * Load theme style
+ * @param {string} theme - Theme name
+ */
 const loadThemeStyle = (theme) => {
     let themeStyle = document.getElementById('theme-style');
 
@@ -11,9 +15,14 @@ const loadThemeStyle = (theme) => {
     themeStyle.href = `css/themes/${theme}.css`;
 }
 
+/**
+ * Set theme
+ * @param {string} theme - Theme name
+ */
 const setTheme = (theme) => {
     localStorage.setItem('theme', theme);
     loadThemeStyle(theme);
 }
 
+// Load theme from local storage
 loadThemeStyle(localStorage.getItem('theme') || 'dark');

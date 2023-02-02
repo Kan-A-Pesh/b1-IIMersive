@@ -1,3 +1,4 @@
+// Toggle sidebar when menu icon is clicked
 document
     .querySelector("nav .menu")
     .addEventListener("click", () => {

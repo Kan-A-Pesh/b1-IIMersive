@@ -10,3 +10,7 @@ button {
     outline: none;
     border: none;
 }
+
+button:hover {
+    filter: brightness(1.1);
+}
