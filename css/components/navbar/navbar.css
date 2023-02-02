@@ -14,3 +14,13 @@ nav {
 nav>h2 {
     margin-right: auto;
 }
+
+nav .input {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@media screen and (min-width: 768px) {
+    nav .menu {
+        display: none;
+    }
+}
