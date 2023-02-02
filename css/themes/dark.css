@@ -1,0 +1,14 @@
+:root {
+    --background-primary: #30324A;
+    --background-accent: #202131;
+    --background: linear-gradient(115deg,
+            var(--background-primary) 0%,
+            var(--background-accent) 100%);
+
+    --body-primary: #0E0D23;
+    --body-accent: #08080C;
+
+    --white: #FFFFFF;
+    --primary: #39D5E1;
+    --secondary: #E13939;
+}

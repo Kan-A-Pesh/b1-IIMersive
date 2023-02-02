@@ -1,0 +1,28 @@
+@import url("./fonts/montserrat.css");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: linear-gradient(115deg,
+            var(--body-primary) 0%,
+            var(--body-accent) 100%);
+
+    color: var(--white);
+}
+
+object {
+    fill: var(--white);
+}
+
+.color-primary {
+    color: var(--primary);
+}
+
+.bg-primary {
+    background: var(--primary);
+}
