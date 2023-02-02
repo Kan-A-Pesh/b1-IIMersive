@@ -7,16 +7,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IIMersive</title>
 
-    <script defer src="js/components.js"></script>
-    <script defer src="js/theme.js"></script>
-
     <link rel="stylesheet" href="css/root.css">
     <link rel="stylesheet" href="css/pages/index.css">
     <link rel="stylesheet" href="css/components/index.css">
+
+    <script defer src="js/theme.js"></script>
+    <script defer src="js/navbar/navbar.js"></script>
 </head>
 
 <body>
-    <div data-dynamic="components/navbar"></div>
+    <nav>
+        <h2><span class="color-primary">IIM</span>ersive</h2>
+        <div class="input">
+            <input type="text" placeholder="Recherche">
+            <img src="img/icons/search.svg" alt="🔎">
+        </div>
+        <img src="img/icons/menu.svg" alt="☰" class="menu">
+    </nav>
+
+    <div id="app">
+        <section class="sidebar">
+            <div class="profile-card">
+                <img src="img/defaults/profile_pic.png" alt="Profile picture">
+                <div class="profile-info">
+                    <h2>Profile-Name</h2>
+                    <button class="bg-primary">
+                        <h3>Voir mon profil</h3>
+                    </button>
+                </div>
+            </div>
+
+            <div class="links">
+                <div class="link">
+                    <img src="img/icons/home.svg" alt="🏠">
+                    <h2>Accueil</h2>
+                </div>
+                <div class="link">
+                    <img src="img/icons/bell.svg" alt="🔔">
+                    <h2>Notifications</h2>
+                </div>
+                <div class="link">
+                    <img src="img/icons/message-circle.svg" alt="💬">
+                    <h2>Messages</h2>
+                </div>
+                <div class="link">
+                    <img src="img/icons/settings.svg" alt="⚙️">
+                    <h2>Paramètres</h2>
+                </div>
+                <div class="link color-secondary">
+                    <img src="img/icons/log-out.svg" alt="🚪">
+                    <h2>Se déconnecter</h2>
+                </div>
+            </div>
+        </section>
+    </div>
 </body>
 
 </html>

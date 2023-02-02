@@ -1,6 +1,8 @@
-@import url("./navbar/navbar.css");
-
 @import url("./inputs/text-input.css");
+@import url("./inputs/submit-input.css");
+
+@import url("./navbar/navbar.css");
+@import url("./navbar/sidebar.css");
 
 @import url("./texts/texts.desktop.css");
 @import url("./texts/texts.mobile.css");

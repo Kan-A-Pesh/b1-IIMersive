@@ -1,0 +1,78 @@
+.sidebar {
+    position: fixed;
+    top: 50px;
+    left: 100vw;
+
+    height: calc(100vh - 50px);
+    width: 100vw;
+
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    z-index: 100;
+
+    transition: left 0.3s ease-in-out;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 16px;
+}
+
+.sidebar.openned {
+    left: 0;
+}
+
+.sidebar .profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+}
+
+.sidebar .profile-card img {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+}
+
+.sidebar .profile-card .profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar .links {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 0;
+}
+
+.sidebar .links .link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    transition: all .2s ease-in-out;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.sidebar .links .link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    padding-left: 32px;
+}
+
+@media screen and (min-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: auto;
+        height: auto;
+
+        min-width: 300px;
+
+        top: 0;
+        left: 0;
+    }
+}

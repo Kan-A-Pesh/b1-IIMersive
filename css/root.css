@@ -13,10 +13,25 @@ body {
             var(--body-accent) 100%);
 
     color: var(--white);
+
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#app {
+    flex-grow: 1;
 }
 
 object {
     fill: var(--white);
+}
+
+button {
+    cursor: pointer;
 }
 
 .color-primary {
@@ -25,4 +40,12 @@ object {
 
 .bg-primary {
     background: var(--primary);
+}
+
+.color-secondary {
+    color: var(--secondary);
+}
+
+.bg-secondary {
+    background: var(--secondary);
 }

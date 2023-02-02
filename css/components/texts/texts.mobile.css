@@ -2,21 +2,21 @@
 
     h1,
     .h1 {
-        font-size: 36px;
+        font-size: 22px;
     }
 
     h2,
     .h2 {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     h3,
     .h3 {
-        font-size: 12px;
+        font-size: 11px;
     }
 
     p,
     .p {
-        font-size: 11px;
+        font-size: 10px;
     }
 }

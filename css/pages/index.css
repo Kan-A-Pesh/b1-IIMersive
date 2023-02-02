@@ -1,0 +1,12 @@
+#app {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+    #app {
+        display: grid;
+        grid-template-columns: 3fr 6fr 3fr;
+        grid-template-rows: 1fr;
+    }
+}
