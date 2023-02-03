@@ -22,6 +22,10 @@ body {
     flex-direction: column;
 }
 
+a {
+    text-decoration: none;
+}
+
 #app {
     flex-grow: 1;
 }

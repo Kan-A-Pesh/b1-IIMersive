@@ -26,7 +26,7 @@ const loadPage = (page) => {
         if (xhr.status === 200) {
             mainElement.innerHTML = xhr.responseText;
         } else {
-            mainElement.innerHTML = '<h1>Page not found</h1>';
+            loadPage('notfound');
         }
     }
 
