@@ -1,7 +1,7 @@
 :root {
     --background-primary: #30324A;
     --background-accent: #202131;
-    --background: linear-gradient(115deg,
+    --linear: linear-gradient(115deg,
             var(--background-primary) 0%,
             var(--background-accent) 100%);
 
