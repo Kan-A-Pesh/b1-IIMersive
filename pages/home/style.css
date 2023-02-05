@@ -1,10 +1,6 @@
 #main {
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-end;
-    gap: 16px;
+    display: inline-block;
 
-    height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -13,23 +9,27 @@
 
 @media screen and (min-width: 1024px) {
     #main {
-        flex-direction: row;
-    }
-
-    .posts {
-        width: 66.67%;
-    }
-
-    .recommended {
-        width: 33.33%;
+        flex-direction: row-reverse;
     }
 }
 
-#main>* {
+#main>section {
     display: flex;
     flex-direction: column;
     gap: 16px;
     padding: 16px;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    margin: 0 64px;
+    background: var(--background-primary);
+    opacity: .65;
+}
+
+.posts {
+    min-width: 1px;
 }
 
 .posts>.tag-buttons {
@@ -95,7 +95,7 @@
 }
 
 .add-post {
-    position: absolute;
+    position: fixed;
     bottom: 16px;
     right: 16px;
     width: 64px;
@@ -112,4 +112,22 @@
 
 .add-post:hover {
     transform: scale(1.1);
+}
+
+.recommended {
+    min-width: 30vw;
+}
+
+.recommended .card>.header {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.recommended .card>.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
 }

@@ -1,0 +1,22 @@
+.user-card {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-left: 0;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.user-card:hover {
+    padding-left: 8px;
+}
+
+.user-card img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.user-card h3 {
+    font-weight: 600;
+}
