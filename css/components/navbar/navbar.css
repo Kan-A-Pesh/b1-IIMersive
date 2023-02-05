@@ -2,8 +2,8 @@ nav {
     height: 50px;
     width: 100%;
 
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(7.5px);
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(15px);
 
     display: flex;
     align-items: center;
@@ -17,6 +17,15 @@ nav>h2 {
 
 nav .input {
     background: rgba(255, 255, 255, 0.1);
+}
+
+nav img {
+    cursor: pointer;
+    opacity: .85;
+}
+
+nav img:hover {
+    opacity: 1;
 }
 
 @media screen and (min-width: 768px) {
