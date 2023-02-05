@@ -10,6 +10,10 @@ Il s'agit d'un réseau social permettant de partager des textes et des images, d
 Le projet est réalisé avec un front-end en HTML/CSS/JS natif, sauf pour les pages de connexion et d'inscription qui sont réalisées à l'aide de Bootstrap.\
 Le back-end est réalisé en PHP natif, avec une base de données MySQL.
 
+## 📜 Documentation
+
+[ENDPOINTS.md](api/ENDPOINTS.md) : Liste des endpoints de l'API
+
 ## 📝 Fonctionnalités
 
 - Connexion/Inscription
