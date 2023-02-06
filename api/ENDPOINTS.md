@@ -247,12 +247,15 @@ Récupère la liste des posts.
 
 | Paramètre | Type | Obligatoire | Description |
 | --------- | ---- | ----------- | ----------- |
-| query | string | oui | La chaîne de caractères à rechercher dans les titres et les descriptions |
+| query | string | non | La chaîne de caractères à rechercher dans les titres et les descriptions |
 | limit | integer | non | Le nombre de posts à récupérer (max. 25) |
 | offset | integer | non | Le nombre de posts à ignorer |
 | fromUser | string | non | Le nom d'utilisateur de l'auteur des posts à récupérer |
 | excludeUser | string | non | Le nom d'utilisateur de l'auteur des posts à ignorer |
-| replyTo | string | non | L'identifiant du post auquel les posts à récupérer sont des réponses |
+| replyTo | string* | non | L'identifiant du post auquel les posts à récupérer sont des réponses |
+| hasMedia | boolean | non | Si `true`, seuls les posts avec des médias seront récupérés |
+
+*Le paramètre `replyTo` peut avoir les valeurs `*` ou `none` pour récupérer les uniquement posts qui sont des réponses ou qui ne le sont pas respectivement.
 
 #### Réponse
 
