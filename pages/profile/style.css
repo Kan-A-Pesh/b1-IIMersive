@@ -1,0 +1,123 @@
+#main {
+    display: block;
+    overflow-y: auto;
+
+    --padding-value: 32px;
+}
+
+#main>.banner {
+    width: 100%;
+    height: 25vh;
+}
+
+#main>.banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#main>.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--padding-value);
+    gap: 8px;
+    height: 50px;
+}
+
+#main>.header>img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    position: absolute;
+    bottom: 0;
+    left: var(--padding-value);
+}
+
+#main>.header>h3 {
+    margin-left: 116px;
+}
+
+#main>.biography {
+    padding: 16px var(--padding-value);
+}
+
+#main>.tabs {
+    display: flex;
+    gap: 16px;
+    padding: 0 var(--padding-value);
+    overflow-x: auto;
+}
+
+.btn-underline {
+    position: relative;
+    border: none;
+    background: none;
+    padding: 0 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-underline p {
+    margin: 8px 0;
+    opacity: .4;
+}
+
+.btn-underline:hover p {
+    opacity: .65;
+}
+
+.btn-underline.active p {
+    opacity: 1;
+}
+
+.btn-underline .underline {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+
+    background: var(--white);
+    opacity: .5;
+
+    transition: width 0.3s;
+}
+
+.btn-underline:hover .underline {
+    width: 50%;
+}
+
+.btn-underline.active .underline {
+    width: 100%;
+    background-color: var(--primary);
+    opacity: 1;
+}
+
+#main>.posts {
+    display: flex;
+    flex-direction: column;
+    padding: var(--padding-value);
+    gap: 16px;
+    width: fit-content;
+}
+
+#main>.posts article {
+    min-width: 40vw;
+}
+
+@media screen and (max-width: 576px) {
+    #main {
+        --padding-value: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    #main>.posts article {
+        width: 100%;
+    }
+}

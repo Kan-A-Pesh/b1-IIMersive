@@ -63,7 +63,7 @@ if (page) {
     loadPage('home');
 }
 
-const menuLinks = document.querySelectorAll('.sidebar .links a');
+const menuLinks = document.querySelectorAll('.sidebar a');
 
 menuLinks.forEach((link) => {
     link.addEventListener('click', (event) => {

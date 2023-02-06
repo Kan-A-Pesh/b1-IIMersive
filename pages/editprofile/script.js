@@ -113,7 +113,7 @@
     // Delete banner image
     bannerDelete.addEventListener("click", () => {
         // Set image to default
-        bannerImg.src = "img/defaults/banner.png";
+        bannerImg.src = "img/defaults/banner.jpg";
 
         // Show modal
         showModal();
