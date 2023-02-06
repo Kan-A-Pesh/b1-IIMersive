@@ -1,7 +1,10 @@
 @import url("./cards/user-card.css");
 
+@import url("./inputs/textarea-input.css");
 @import url("./inputs/text-input.css");
 @import url("./inputs/submit-input.css");
+
+@import url("./modals/save-modal.css");
 
 @import url("./navbar/navbar.css");
 @import url("./navbar/sidebar.css");

@@ -242,18 +242,6 @@ hr {
     padding: 16px;
 }
 
-.modal>.modal-content>.content>textarea {
-    max-height: 100px;
-    padding: 8px;
-
-    background-color: rgba(0, 0, 0, 0.3);
-    color: var(--white);
-
-    resize: none;
-    border: none;
-    outline: none;
-}
-
 .modal>.modal-content>.content>.tag-buttons {
     padding-bottom: 8px;
 }

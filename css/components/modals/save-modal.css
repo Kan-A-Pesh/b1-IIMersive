@@ -1,0 +1,41 @@
+.save-modal {
+    position: fixed;
+    bottom: -500px;
+    background: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: row;
+    gap: 48px;
+    align-items: center;
+    justify-content: space-between;
+    transition: bottom 0.3s;
+}
+
+.save-modal.show {
+    bottom: 16px;
+}
+
+.save-modal>.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+@media screen and (max-width: 968px) {
+    .save-modal {
+        flex-direction: column;
+        gap: 16px;
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .save-modal {
+        left: 16px;
+        right: 16px;
+        width: auto;
+    }
+}
