@@ -8,8 +8,12 @@
     --body-primary: #ffffff;
     --body-accent: #ffffff;
 
-    --black-rgb: 255, 255, 255;
+    --black-rgb: 200, 200, 200;
     --white: black;
     --primary: #39D5E1;
     --secondary: #E13939;
+}
+
+img.icons {
+    filter: invert(1);
 }

@@ -2,7 +2,7 @@ nav {
     height: 50px;
     width: 100%;
 
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(var(--black-rgb), 0.75);
     backdrop-filter: blur(15px);
 
     display: flex;

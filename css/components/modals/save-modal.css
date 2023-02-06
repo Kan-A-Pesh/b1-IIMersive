@@ -1,7 +1,7 @@
 .save-modal {
     position: fixed;
     bottom: -500px;
-    background: rgba(0, 0, 0, .5);
+    background: rgba(var(--black-rgb), .5);
     backdrop-filter: blur(8px);
     border-radius: 16px;
     padding: 16px;

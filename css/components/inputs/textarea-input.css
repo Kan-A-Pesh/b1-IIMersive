@@ -3,7 +3,7 @@ textarea {
     padding: 8px;
     border-radius: 8px;
 
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(var(--black-rgb), 0.3);
     color: var(--white);
 
     resize: none;

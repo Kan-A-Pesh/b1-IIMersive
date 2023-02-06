@@ -196,7 +196,7 @@ hr {
     justify-content: center;
     align-items: center;
 
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--black-rgb), 0.5);
     z-index: 100;
 
     opacity: 0;
@@ -214,7 +214,7 @@ hr {
     width: 90%;
     max-width: 500px;
     border-radius: 24px;
-    box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 16px 0 rgba(var(--black-rgb), 0.5);
     overflow: hidden;
 
     display: flex;
@@ -227,7 +227,7 @@ hr {
     justify-content: space-between;
     align-items: center;
     padding: 24px;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(var(--black-rgb), 0.3);
 }
 
 .modal>.modal-content>.header>button {
@@ -259,7 +259,7 @@ hr {
     padding: 0;
     overflow: hidden;
 
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(var(--black-rgb), 0.3);
     flex-direction: column;
 }
 
