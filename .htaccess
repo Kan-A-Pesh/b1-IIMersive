@@ -1,0 +1,17 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    RewriteCond %{REQUEST_URI} !^/api
+    RewriteCond %{REQUEST_URI} !^/css
+    RewriteCond %{REQUEST_URI} !^/fonts
+    RewriteCond %{REQUEST_URI} !^/img
+    RewriteCond %{REQUEST_URI} !^/js
+    RewriteCond %{REQUEST_URI} !^/index.html
+    RewriteCond %{REQUEST_URI} !^/login.html
+    RewriteCond %{REQUEST_URI} !^/register.html
+
+    RewriteRule ^(.*)$ index.html?page=$1 [L,QSA]
+</IfModule>
+
+ErrorDocument 404 /index.html?page=notfound

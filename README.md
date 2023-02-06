@@ -10,6 +10,28 @@ Il s'agit d'un réseau social permettant de partager des textes et des images, d
 Le projet est réalisé avec un front-end en HTML/CSS/JS natif, sauf pour les pages de connexion et d'inscription qui sont réalisées à l'aide de Bootstrap.\
 Le back-end est réalisé en PHP natif, avec une base de données MySQL.
 
+## ⚡️ Installation
+
+Le projet nécessite un serveur web Apache, PHP et MySQL.
+
+### 🐋 Docker
+
+Vous pouvez utiliser Docker pour installer le projet.\
+Pour cela, il vous suffit de cloner le projet, puis de lancer la commande suivante :
+
+```bash
+docker run -d -p 5555:80 --mount type=bind,source="$(pwd)",target=/var/www/html php:apache
+```
+
+Vous pouvez ensuite accéder au projet à l'adresse `http://localhost:5555/`.
+
+### 📦 Manuel
+
+Vous pouvez également installer le projet manuellement.\
+Pour cela, il est nécessaire d'installer un serveur web Apache et PHP et de configurer la base de données MySQL manuellement.
+
+Les informations de connexion à la base de données sont à renseigner dans le fichier `api/config.php`.
+
 ## 📜 Documentation
 
 [ENDPOINTS.md](api/ENDPOINTS.md) : Liste des endpoints de l'API
