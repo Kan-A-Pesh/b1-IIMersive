@@ -25,6 +25,16 @@ const loadPage = (page) => {
     xhr.onload = () => {
         if (xhr.status === 200) {
             mainElement.innerHTML = xhr.responseText;
+
+            // Load page scripts (JS)
+            const script = document.createElement('script');
+            script.src = `pages/${page}/script.js`;
+            script.id = 'page-script';
+            document.head.appendChild(script);
+
+            // Close sidebar
+            const sidebar = document.querySelector(".sidebar");
+            sidebar.classList.remove("openned");
         } else {
             loadPage('notfound');
         }
@@ -39,18 +49,8 @@ const loadPage = (page) => {
         previousScript.remove();
     }
 
-    // Load page scripts (JS)
-    const script = document.createElement('script');
-    script.src = `pages/${page}/script.js`;
-    script.id = 'page-script';
-    document.head.appendChild(script);
-
     // Update URL
     window.history.pushState({}, page, `/${page}`);
-
-    // Close sidebar
-    const sidebar = document.querySelector(".sidebar");
-    sidebar.classList.remove("openned");
 }
 
 // Load from URL parameter
