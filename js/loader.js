@@ -44,6 +44,13 @@ const loadPage = (page) => {
     script.src = `pages/${page}/script.js`;
     script.id = 'page-script';
     document.head.appendChild(script);
+
+    // Update URL
+    window.history.pushState({}, page, `/${page}`);
+
+    // Close sidebar
+    const sidebar = document.querySelector(".sidebar");
+    sidebar.classList.remove("openned");
 }
 
 // Load from URL parameter
@@ -55,3 +62,14 @@ if (page) {
 } else {
     loadPage('home');
 }
+
+const menuLinks = document.querySelectorAll('.sidebar .links a');
+
+menuLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const page = link.getAttribute('href').substring(1);
+        loadPage(page);
+    });
+});

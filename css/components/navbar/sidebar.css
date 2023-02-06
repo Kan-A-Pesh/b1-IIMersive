@@ -57,6 +57,7 @@
     transition: all .2s ease-in-out;
     border-radius: 8px;
     cursor: pointer;
+    color: var(--white);
 }
 
 .sidebar .links .link:hover {
