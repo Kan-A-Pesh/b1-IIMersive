@@ -1,0 +1,17 @@
+#main {
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+}
+
+#main>section {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 48px;
+    gap: 16px;
+}
+
+#main>section>img {
+    border-radius: 50%;
+}
