@@ -3,6 +3,11 @@
  * @param {string} theme - Theme name
  */
 const loadThemeStyle = (theme) => {
+    if (theme === "system") {
+        // Get system theme
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+
     let themeStyle = document.getElementById('theme-style');
 
     if (!themeStyle) {
@@ -13,15 +18,6 @@ const loadThemeStyle = (theme) => {
     }
 
     themeStyle.href = `css/themes/${theme}.css`;
-}
-
-/**
- * Set theme
- * @param {string} theme - Theme name
- */
-const setTheme = (theme) => {
-    localStorage.setItem('theme', theme);
-    loadThemeStyle(theme);
 }
 
 // Load theme from local storage

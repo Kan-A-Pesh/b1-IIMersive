@@ -1,15 +1,15 @@
 :root {
-    --background-primary: #30324A;
-    --background-accent: #202131;
+    --background-primary: #f2f3ff;
+    --background-accent: #e7e8ff;
     --linear: linear-gradient(115deg,
             var(--background-primary) 0%,
             var(--background-accent) 100%);
 
-    --body-primary: #0E0D23;
-    --body-accent: #08080C;
+    --body-primary: #ffffff;
+    --body-accent: #ffffff;
 
-    --black-rgb: 0, 0, 0;
-    --white: #FFFFFF;
+    --black-rgb: 255, 255, 255;
+    --white: black;
     --primary: #39D5E1;
     --secondary: #E13939;
 }
