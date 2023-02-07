@@ -38,11 +38,4 @@
         content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.'
     });
 
-    setTimeout(() => {
-        appendNotification({
-            image: 'img/defaults/profile_pic.png',
-            content: 'Another notification'
-        });
-    }, 3000);
-
 })();
