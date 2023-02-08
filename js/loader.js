@@ -16,7 +16,7 @@ const loadPage = (page) => {
         document.head.appendChild(pageStyle);
     }
 
-    pageStyle.href = `pages/${page}/style.css`;
+    pageStyle.href = `/pages/${page}/style.css`;
 
 
     // Load page content (HTML)
@@ -28,7 +28,7 @@ const loadPage = (page) => {
 
             // Load page scripts (JS)
             const script = document.createElement('script');
-            script.src = `pages/${page}/script.js`;
+            script.src = `/pages/${page}/script.js`;
             script.id = 'page-script';
             document.head.appendChild(script);
 
@@ -40,7 +40,7 @@ const loadPage = (page) => {
         }
     }
 
-    xhr.open('GET', `pages/${page}/index.html`);
+    xhr.open('GET', `/pages/${page}/index.html`);
     xhr.send();
 
     // Remove previous page scripts (JS)
@@ -48,20 +48,11 @@ const loadPage = (page) => {
     if (previousScript) {
         previousScript.remove();
     }
-
-    // Update URL
-    window.history.pushState({}, page, `/${page}`);
 }
 
 // Load from URL parameter
-const urlParams = new URLSearchParams(window.location.search);
-const page = urlParams.get('page');
-
-if (page) {
-    loadPage(page);
-} else {
-    loadPage('home');
-}
+const page = queryPath[0] || 'home';
+loadPage(page);
 
 const menuLinks = document.querySelectorAll('.sidebar a');
 
@@ -71,5 +62,8 @@ menuLinks.forEach((link) => {
 
         const page = link.getAttribute('href').substring(1);
         loadPage(page);
+
+        // Update URL
+        window.history.pushState({}, page, `/${page}`);
     });
 });

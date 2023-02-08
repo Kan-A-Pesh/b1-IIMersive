@@ -20,7 +20,7 @@
                     posts.innerHTML += `
                     <article class="card bg-linear feed-post tag-0">
                         <div class="header">
-                            <img src="img/defaults/profile_pic.png" alt="Image de profil">
+                            <img src="/img/defaults/profile_pic.png" alt="Image de profil">
                             <div class="info">
                                 <div class="names">
                                     <h3 class="opacity-9">Kan-à-Pesh</h3>
@@ -35,23 +35,23 @@
                         </div>
                         <div class="content">
                             <p>Voici ma nouvelle photo de profil!</p>
-                            <img src="img/defaults/profile_pic.png" alt="Image de l'article">
+                            <img src="/img/defaults/profile_pic.png" alt="Image de l'article">
                         </div>
                         <div class="footer">
                             <div class="likes">
-                                <img class="icons" src="img/icons/heart.svg" alt="🤍">
+                                <img class="icons" src="/img/icons/heart.svg" alt="🤍">
                                 <p>0</p>
                             </div>
                             <div class="comments">
-                                <img class="icons" src="img/icons/message-square.svg" alt="💬">
+                                <img class="icons" src="/img/icons/message-square.svg" alt="💬">
                                 <p>0</p>
                             </div>
                             <div class="views">
-                                <img class="icons" src="img/icons/eye.svg" alt="👁️">
+                                <img class="icons" src="/img/icons/eye.svg" alt="👁️">
                                 <p>0</p>
                             </div>
                             <div class="delete color-secondary hidden">
-                                <img src="img/icons/trash.svg" alt="🗑️">
+                                <img src="/img/icons/trash.svg" alt="🗑️">
                             </div>
                         </div>
                     </article>

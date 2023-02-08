@@ -2,16 +2,21 @@
     RewriteEngine On
     RewriteBase /
 
-    RewriteCond %{REQUEST_URI} !^/api
-    RewriteCond %{REQUEST_URI} !^/css
-    RewriteCond %{REQUEST_URI} !^/fonts
-    RewriteCond %{REQUEST_URI} !^/img
-    RewriteCond %{REQUEST_URI} !^/js
-    RewriteCond %{REQUEST_URI} !^/index.html
-    RewriteCond %{REQUEST_URI} !^/login.html
-    RewriteCond %{REQUEST_URI} !^/register.html
+    # Remove trailing slash if its there and continue to the next rule
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L]
 
-    RewriteRule ^(.*)$ index.html?page=$1 [L,QSA]
+    # Redirect /login to /login.html
+    RewriteRule ^login$ login.html [QSA,END]
+
+    # Redirect /register to /register.html
+    RewriteRule ^register$ register.html [QSA,END]
+
+    # Redirect /api/* to /api/*.php
+    RewriteRule ^api/(.*)$ api/$1.php [QSA,END]
+
+    # Redirect /... to /index.html?page=...
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?$1 [QSA,END]
 </IfModule>
-
-ErrorDocument 404 /index.html?page=notfound

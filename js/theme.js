@@ -17,7 +17,7 @@ const loadThemeStyle = (theme) => {
         document.head.appendChild(themeStyle);
     }
 
-    themeStyle.href = `css/themes/${theme}.css`;
+    themeStyle.href = `/css/themes/${theme}.css`;
 }
 
 // Load theme from local storage

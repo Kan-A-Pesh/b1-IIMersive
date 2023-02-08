@@ -79,7 +79,7 @@
     // Delete profile image
     profileDelete.addEventListener("click", () => {
         // Set image to default
-        profileImg.src = "img/defaults/profile_pic.png";
+        profileImg.src = "/img/defaults/profile_pic.png";
 
         // Show modal
         showModal();
@@ -113,7 +113,7 @@
     // Delete banner image
     bannerDelete.addEventListener("click", () => {
         // Set image to default
-        bannerImg.src = "img/defaults/banner.jpg";
+        bannerImg.src = "/img/defaults/banner.jpg";
 
         // Show modal
         showModal();

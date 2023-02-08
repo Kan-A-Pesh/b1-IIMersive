@@ -26,3 +26,12 @@ jobs:
       -
         name: Deploy with rsync
         run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/workspaces/iim/iimersive
+      -
+        name: Stop previous Docker container
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker rm $(docker stop $(docker ps -a -q --filter ancestor=php-apache-iimersive --format=\"{{.ID}}\"))"
+      -
+        name: Rebuild Docker image
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker build -t php-apache-iimersive ."
+      -
+        name: Restart Docker container
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -d -p 5555:80 --mount type=bind,source=\"$(pwd)\",target=/var/www/html php-apache-iimersive"

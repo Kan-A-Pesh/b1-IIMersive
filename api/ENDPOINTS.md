@@ -27,6 +27,26 @@ Ou, dans le cas d'une erreur:
 }
 ```
 
+## Status
+
+### GET /api/
+
+Récupère le statut du serveur.
+
+#### Paramètres
+
+Aucun paramètre n'est requis.
+
+#### Réponse
+
+Aucune réponse n'est renvoyée, le code HTTP est 204.
+
+#### Erreurs
+
+| Code | Message | Description |
+| ---- | ------- | ----------- |
+| 500 | Internal Server Error | Une erreur interne est survenue |
+
 ## Authentification
 
 ### POST /api/auth/login
