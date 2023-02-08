@@ -1,4 +1,7 @@
 (() => {
+    const chatContainer = document.querySelector(".chat-container");
+    const backButton = document.querySelector(".back-button");
+
     const messageList = document.querySelector(".message-list");
     const messageInput = document.querySelector(".chat-container input");
     const messageSubmit = document.querySelector(".chat-container button");
@@ -18,6 +21,10 @@
             localStorage.setItem("messageRead", JSON.stringify(readMessages));
         }
     };
+
+    backButton.addEventListener("click", () => {
+        chatContainer.classList.add("hidden");
+    });
 
     /**
      * Load messages from the server and display them
@@ -113,6 +120,37 @@
     // Send message on button click
     messageSubmit.addEventListener("click", sendMessage);
 
+    /**
+     * Transform an ISO date to a relative time (ex: 2h)
+     * @param {string} date - ISO date
+     * @returns {string} - Relative time
+     */
+    const relativeTime = (date) => {
+        const now = new Date();
+        const messageDate = new Date(date);
+        const diff = now - messageDate;
+
+        const seconds = Math.floor(diff / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        const months = Math.floor(days / 30);
+        const years = Math.floor(months / 12);
+
+        if (seconds < 60) {
+            return `${seconds}s`;
+        } else if (minutes < 60) {
+            return `${minutes}mn`;
+        } else if (hours < 24) {
+            return `${hours}h`;
+        } else if (days < 30) {
+            return `${days}j`;
+        } else if (months < 12) {
+            return `${months}m`;
+        } else {
+            return `${years}a`;
+        }
+    };
 
     /**
      * Add a user to the user list
@@ -139,7 +177,13 @@
                 ? `<p>${lastMsg.lastMessageContent.length > 15 ?
                     lastMsg.lastMessageContent.substring(0, 15) + "..." :
                     lastMsg.lastMessageContent
-                }</p>`
+                }
+                 •
+                ${lastMsg.lastMessageDate
+                    ? relativeTime(lastMsg.lastMessageDate)
+                    : ""
+                }
+                </p>`
                 : ""}
             </div>
             ${messageRead
@@ -151,6 +195,7 @@
             addReadMessage(lastMsg.lastMessageId);
 
             userElement.querySelector(".notification-circle")?.remove();
+            chatContainer.classList.remove("hidden");
         });
 
         messageUsers.appendChild(userElement);
