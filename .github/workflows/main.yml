@@ -37,4 +37,4 @@ jobs:
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker build -t php-apache-iimersive /workspaces/iim/iimersive/"
       -
         name: Restart Docker container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -d --name iimersive -p 8010:80 --mount type=bind,source=\"$(pwd)\",target=/var/www/html php-apache-iimersive"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -d --name iimersive -p 8010:80 -v type=bind,source=\"$(pwd)\",target=/var/www/html php-apache-iimersive"
