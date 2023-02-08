@@ -1,0 +1,104 @@
+#main {
+    display: grid;
+    grid-template-columns: 3fr 6fr;
+}
+
+.user-list {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 8px;
+    justify-content: stretch;
+}
+
+.user-card {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    position: relative;
+    border-radius: 16px;
+}
+
+.user-card:hover {
+    filter: brightness(1.15);
+}
+
+.user-card img {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+}
+
+.user-card .user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-card .notification-circle {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: var(--secondary);
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container .input-container {
+    padding: 16px;
+    display: flex;
+    gap: 8px;
+}
+
+.chat-container .input-container input {
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.chat-container .input-container button {
+    width: 100px;
+}
+
+.chat-container .message-wrapper {
+    flex-grow: 1;
+    position: relative;
+}
+
+.chat-container .message-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    gap: 16px;
+
+    overflow-y: auto;
+}
+
+.message {
+    display: flex;
+    gap: 8px;
+}
+
+.message>img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.message .message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}

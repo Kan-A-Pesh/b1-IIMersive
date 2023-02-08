@@ -257,6 +257,183 @@ Modifie les informations d'un utilisateur.
 | 404 | Not Found | L'utilisateur n'existe pas |
 | 500 | Internal Server Error | Une erreur interne est survenue |
 
+## Messages
+
+### GET /api/messages
+
+Récupère la liste des utilisateurs avec qui l'utilisateur a échangé.
+
+#### Paramètres
+
+| Paramètre | Type | Obligatoire | Description |
+| --------- | ---- | ----------- | ----------- |
+| limit | integer | non | Le nombre de messages à récupérer (max. 25) |
+| offset | integer | non | Le nombre de messages à ignorer |
+
+#### Réponse
+
+```json
+{
+    "success": true,
+    "code": 200,
+    "message": "OK",
+    "payload": [
+        {
+            "handle": "janedoe",
+            "name": "Jane Doe",
+            "avatar": "https://domain.com/avatar.png",
+            "lastMessageId": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+            "lastMessageContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "lastMessageDate": "2019-01-01T00:00:00.000Z"
+        },
+        {
+            "handle": "janedoe",
+            "name": "Jane Doe",
+            "avatar": "https://domain.com/avatar.png",
+            "lastMessageId": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+            "lastMessageContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "lastMessageDate": "2019-01-01T00:00:00.000Z"
+        }
+    ]
+}
+```
+
+#### Erreurs
+
+| Code | Message | Description |
+| ---- | ------- | ----------- |
+| 401 | Unauthorized | L'identifiant de session est invalide |
+| 500 | Internal Server Error | Une erreur interne est survenue |
+
+### GET /api/messages/:handle
+
+Récupère la liste des messages échangés avec un utilisateur.
+
+#### Paramètres
+
+| Paramètre | Type | Obligatoire | Description |
+| --------- | ---- | ----------- | ----------- |
+| limit | integer | non | Le nombre de messages à récupérer (max. 25) |
+| offset | integer | non | Le nombre de messages à ignorer |
+
+#### Réponse
+
+```json
+{
+    "success": true,
+    "code": 200,
+    "message": "OK",
+    "payload": [
+        {
+            "id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "date": "2019-01-01T00:00:00.000Z",
+            "from": {
+                "handle": "janedoe",
+                "name": "Jane Doe",
+                "avatar": "https://domain.com/avatar.png"
+            }
+        },
+        {
+            "id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "date": "2019-01-01T00:00:00.000Z",
+            "from": {
+                "handle": "janedoe",
+                "name": "Jane Doe",
+                "avatar": "https://domain.com/avatar.png"
+            }
+        }
+    ]
+}
+```
+
+#### Erreurs
+
+| Code | Message | Description |
+| ---- | ------- | ----------- |
+| 401 | Unauthorized | L'identifiant de session est invalide |
+| 404 | Not Found | L'utilisateur n'existe pas |
+| 500 | Internal Server Error | Une erreur interne est survenue |
+
+### POST /api/messages/:handle
+
+Envoie un message à un utilisateur.
+
+#### Paramètres
+
+| Paramètre | Type | Obligatoire | Description |
+| --------- | ---- | ----------- | ----------- |
+| content | string | oui | Le contenu du message |
+
+#### Réponse
+
+```json
+{
+    "success": true,
+    "code": 200,
+    "message": "OK",
+    "payload": null
+}
+```
+
+#### Erreurs
+
+| Code | Message | Description |
+| ---- | ------- | ----------- |
+| 400 | Bad Request | Le contenu du message est manquant ou invalide |
+| 401 | Unauthorized | L'identifiant de session est invalide |
+| 404 | Not Found | L'utilisateur n'existe pas |
+| 500 | Internal Server Error | Une erreur interne est survenue |
+
+## Notifications
+
+### GET /api/notifications
+
+Récupère la liste des notifications de l'utilisateur.
+
+#### Paramètres
+
+| Paramètre | Type | Obligatoire | Description |
+| --------- | ---- | ----------- | ----------- |
+| limit | integer | non | Le nombre de notifications à récupérer (max. 25) |
+| offset | integer | non | Le nombre de notifications à ignorer |
+
+*⚠️ Uniquement les 50 dernières notifications sont conservées, les notifications plus anciennes sont automatiquement supprimées.*
+
+*⚠️ Les notifications envoyées par l'API sont automatiquement marquées comme lues et supprimées.*
+
+#### Réponse
+
+```json
+{
+    "success": true,
+    "code": 200,
+    "message": "OK",
+    "payload": [
+        {
+            "id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+            "icon": "https://domain.com/notification-icon.png",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "date": "2019-01-01T00:00:00.000Z"
+        },
+        {
+            "id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+            "icon": "https://domain.com/avatar.png",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "date": "2020-01-01T00:00:00.000Z"
+        }
+    ]
+}
+```
+
+#### Erreurs
+
+| Code | Message | Description |
+| ---- | ------- | ----------- |
+| 401 | Unauthorized | L'identifiant de session est invalide |
+| 500 | Internal Server Error | Une erreur interne est survenue |
+
 ## Posts
 
 ### GET /api/posts
