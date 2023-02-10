@@ -15,7 +15,7 @@
     <script defer src="/js/loader.js"></script>
     <script defer src="/js/navbar/navbar.js"></script>
     <script>
-        const queryString = "<?php echo $_SERVER['QUERY_STRING']; ?>";
+        const queryString = "<?php echo htmlspecialchars($_SERVER['QUERY_STRING']); ?>";
         const queryPath = queryString.split('/');
     </script>
 </head>
