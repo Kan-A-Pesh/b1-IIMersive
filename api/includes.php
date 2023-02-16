@@ -6,4 +6,7 @@ error_reporting(E_ALL);
 # ------------------------
 
 include_once(__DIR__ . "/config.php");
-include_once(__DIR__ . "/response.php");
+
+include_once(__DIR__ . "/utils/UUID4.php");
+include_once(__DIR__ . "/utils/database.php");
+include_once(__DIR__ . "/utils/response.php");
