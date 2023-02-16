@@ -14,8 +14,8 @@ try {
     $stmt->execute();
 
     // Send a success message
-    success(204, "No Content");
+    Response::success(204, "No Content");
 } catch (PDOException $e) {
     // Send an error message
-    error(500, $e->getMessage());
+    Response::error(500, $e->getMessage());
 }
