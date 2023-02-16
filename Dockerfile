@@ -1,7 +1,10 @@
-FROM php:apache
+FROM php:7.1-apache
 
 # Copy config files
 COPY conf/apache2.conf /etc/apache2/apache2.conf
+
+# Install extensions
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 # Enable apache modules
 RUN a2enmod rewrite

@@ -4,7 +4,12 @@ include_once(__DIR__ . "/includes.php");
 // Check if mySQL server is reachable
 try {
     // Connect to mySQL server
-    $pdo = new PDO("mysql:host=$MYSQL_HOST;port=$MYSQL_PORT;dbname=$MYSQL_DB", $MYSQL_USER, $MYSQL_PASS);
+    $pdo = new PDO(
+        "mysql:host=$MYSQL_HOST;port=$MYSQL_PORT;dbname=$MYSQL_DB;charset=utf8",
+        $MYSQL_USER,
+        $MYSQL_PASS
+    );
+
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Check if tables exist
@@ -23,5 +28,5 @@ try {
     success(204, "No Content");
 } catch (PDOException $e) {
     // Send an error message
-    error(500, "Internal Server Error");
+    error(500, $e->getMessage());
 }
