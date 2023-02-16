@@ -11,3 +11,7 @@ include_once(__DIR__ . "/utils/UUID4.php");
 include_once(__DIR__ . "/utils/database.php");
 include_once(__DIR__ . "/utils/response.php");
 include_once(__DIR__ . "/utils/cypher.php");
+
+include_once(__DIR__ . "/models/user.php");
+
+include_once(__DIR__ . "/controllers/userController.php");

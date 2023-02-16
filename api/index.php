@@ -2,15 +2,15 @@
 
 // Check if tables exist
 try {
-    $stmt = $_PDO->prepare("SELECT * FROM $MYSQL_USER_TABLE");
+    $stmt = Database::$pdo->prepare("SELECT * FROM $MYSQL_USER_TABLE");
     $stmt->execute();
-    $stmt = $_PDO->prepare("SELECT * FROM $MYSQL_POST_TABLE");
+    $stmt = Database::$pdo->prepare("SELECT * FROM $MYSQL_POST_TABLE");
     $stmt->execute();
-    $stmt = $_PDO->prepare("SELECT * FROM $MYSQL_SESSION_TABLE");
+    $stmt = Database::$pdo->prepare("SELECT * FROM $MYSQL_SESSION_TABLE");
     $stmt->execute();
-    $stmt = $_PDO->prepare("SELECT * FROM $MYSQL_MESSAGE_TABLE");
+    $stmt = Database::$pdo->prepare("SELECT * FROM $MYSQL_MESSAGE_TABLE");
     $stmt->execute();
-    $stmt = $_PDO->prepare("SELECT * FROM $MYSQL_NOTIFICATION_TABLE");
+    $stmt = Database::$pdo->prepare("SELECT * FROM $MYSQL_NOTIFICATION_TABLE");
     $stmt->execute();
 
     // Send a success message
