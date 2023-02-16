@@ -722,3 +722,28 @@ Aucun paramètre n'est requis.
 | 401 | Unauthorized | L'identifiant de session est invalide |
 | 404 | Not Found | Le post n'existe pas |
 | 500 | Internal Server Error | Une erreur interne est survenue |
+
+### GET /api/coffee
+
+Récupère les informations de la machine à café.
+(Plus sérieusement, c'est une route pour tester les erreurs)
+
+#### Paramètres
+
+Aucun paramètre n'est requis.
+
+#### Réponse
+
+```json
+{
+    "success": false,
+    "code": 418,
+    "message": "I'm a teapot",
+}
+```
+
+#### Erreurs
+
+| Code | Message | Description |
+| ---- | ------- | ----------- |
+| 418 | I'm a teapot | Ce n'est pas une machine à café :( |

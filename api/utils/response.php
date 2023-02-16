@@ -17,9 +17,18 @@ function success($code = 200, $message = "OK", $payload = null)
         "payload" => $payload
     );
 
-    http_response_code($code);
+    // Set the response code (204 is a special case)
+    if ($code !== 204)
+        http_response_code($code);
+
+    // Set the content type
+    header("Content-Type: application/json");
+
+    // Send the response
     echo json_encode($response);
-    exit();
+
+    // Exit the script
+    die();
 }
 
 /**
@@ -38,7 +47,15 @@ function error($code = 500, $message = "Internal Server Error")
         "payload" => null
     );
 
+    // Set the response code
     http_response_code($code);
+
+    // Set the content type
+    header("Content-Type: application/json");
+
+    // Send the response
     echo json_encode($response);
-    exit();
+
+    // Exit the script
+    die();
 }
