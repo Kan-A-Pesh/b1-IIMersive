@@ -52,7 +52,7 @@ Une fois le fichier uploadé, il est redimensionné si nécessaire, compressé e
 
 A la récuperation d'un ressource, le serveur renvoie un texte de 20 caractères,
 les 16 premiers étant l'identifiant de la ressource, et les 4 derniers étant l'extension de la ressource.
-*Exemple:* `87fdd8aa3aeafd7cpng` (identifiant: `87fdd8aa3aeafd7c`, extension: `.png`).
+*Exemple:* `87fdd8aa3aeafd7c png` (identifiant: `87fdd8aa3aeafd7c`, extension: `.png`).
 
 ## Status
 
@@ -76,7 +76,7 @@ Aucune réponse n'est renvoyée, le code HTTP est 204.
 
 ## Authentification
 
-### POST /api/auth/login
+### POST /api/auth
 
 Authentifie un utilisateur.
 
@@ -98,7 +98,9 @@ Authentifie un utilisateur.
     "code": 201,
     "message": "Created",
     "payload": {
-        "sessionId": "4d461733-161f-4778-87fd-d8aa3aeafd7c"
+        "session_id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+        "expires": "2019-01-01T00:00:00.000Z",
+        "user_handle": "johndoe"
     }
 }
 ```
@@ -111,9 +113,9 @@ Authentifie un utilisateur.
 | 401 | Unauthorized | L'adresse email ou le nom d'utilisateur et/ou le mot de passe sont incorrects |
 | 500 | Internal Server Error | Une erreur interne est survenue |
 
-### POST /api/auth/logout
+### PUT /api/auth
 
-Déconnecte un utilisateur.
+Renouvelle la session d'un utilisateur.
 
 #### Paramètres
 
@@ -126,6 +128,37 @@ Aucun paramètre n'est requis.
     "success": true,
     "code": 200,
     "message": "OK",
+    "payload": {
+        "session_id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+        "expires": "2019-01-01T00:00:00.000Z",
+        "user_handle": "johndoe"
+    }
+}
+```
+
+#### Erreurs
+
+| Code | Message | Description |
+| ---- | ------- | ----------- |
+| 400 | Bad Request | Un des paramètres est manquant ou invalide |
+| 401 | Unauthorized | L'identifiant de session est invalide |
+| 500 | Internal Server Error | Une erreur interne est survenue |
+
+### DELETE /api/auth
+
+Déconnecte un utilisateur.
+
+#### Paramètres
+
+Aucun paramètre n'est requis.
+
+#### Réponse
+
+```json
+{
+    "success": true,
+    "code": 204,
+    "message": "No Content",
     "payload": null
 }
 ```
@@ -148,7 +181,7 @@ Récupère la liste des utilisateurs.
 
 | Paramètre | Type | Obligatoire | Description |
 | --------- | ---- | ----------- | ----------- |
-| query | string | oui | La chaîne de caractères à rechercher dans les noms et les adresses email |
+| query | string | non | La chaîne de caractères à rechercher dans les noms et les adresses email |
 | limit | integer | non | Le nombre d'utilisateurs à récupérer (max. 25) |
 | offset | integer | non | Le nombre d'utilisateurs à ignorer |
 
@@ -163,12 +196,12 @@ Récupère la liste des utilisateurs.
         {
             "handle": "johndoe",
             "name": "John Doe",
-            "avatar": "https://domain.com/avatar.png"
+            "avatar_path": "4b4a523dc1e1a12b png"
         },
         {
             "handle": "janedoe",
             "name": "Jane Doe",
-            "avatar": "https://domain.com/avatar.png"
+            "avatar_path": "4b4a523d4851a12bjpeg"
         }
     ]
 }
@@ -201,8 +234,8 @@ Aucun paramètre n'est requis.
         "handle": "johndoe",
         "name": "John Doe",
         "biography": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "avatar": "https://domain.com/avatar.png",
-        "banner": "https://domain.com/banner.png"
+        "avatar_path": "4b4a523dc1e1a12b png",
+        "banner_path": "4b4a5ab2b851a128jpeg",
     }
 }
 ```
@@ -257,6 +290,7 @@ Modifie les informations d'un utilisateur.
 
 | Paramètre | Type | Obligatoire | Description |
 | --------- | ---- | ----------- | ----------- |
+| email | string | non* | L'adresse email de l'utilisateur |
 | name | string | non* | Le nom de l'utilisateur |
 | biography | string | non* | La biographie de l'utilisateur |
 | avatar | string | non* | L'URL de l'avatar de l'utilisateur |
@@ -269,8 +303,8 @@ Modifie les informations d'un utilisateur.
 ```json
 {
     "success": true,
-    "code": 200,
-    "message": "OK",
+    "code": 204,
+    "message": "No Content",
     "payload": null
 }
 ```
@@ -282,11 +316,13 @@ Modifie les informations d'un utilisateur.
 | 400 | Bad Request | Un des paramètres est manquant ou invalide |
 | 401 | Unauthorized | L'identifiant de session est invalide |
 | 404 | Not Found | L'utilisateur n'existe pas |
+| 409 | Conflict | L'adresse email ou le nom d'utilisateur est déjà utilisé |
+| 429 | Too Many Requests | Le nombre de requêtes a été dépassé |
 | 500 | Internal Server Error | Une erreur interne est survenue |
 
 ## Messages
 
-### GET /api/messages
+### GET /api/messages/latest
 
 Récupère la liste des utilisateurs avec qui l'utilisateur a échangé.
 
@@ -306,20 +342,16 @@ Récupère la liste des utilisateurs avec qui l'utilisateur a échangé.
     "message": "OK",
     "payload": [
         {
-            "handle": "janedoe",
-            "name": "Jane Doe",
-            "avatar": "https://domain.com/avatar.png",
-            "lastMessageId": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
-            "lastMessageContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "lastMessageDate": "2019-01-01T00:00:00.000Z"
+            "id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+            "author": "janedoe",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "created_at": "2019-01-01T00:00:00.000Z"
         },
         {
-            "handle": "janedoe",
-            "name": "Jane Doe",
-            "avatar": "https://domain.com/avatar.png",
-            "lastMessageId": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
-            "lastMessageContent": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "lastMessageDate": "2019-01-01T00:00:00.000Z"
+            "id": "75315733-501f-3727-88fd-d8aa354af674",
+            "author": "johndoe",
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "created_at": "2020-01-01T00:00:00.000Z"
         }
     ]
 }
@@ -352,24 +384,16 @@ Récupère la liste des messages échangés avec un utilisateur.
     "message": "OK",
     "payload": [
         {
-            "id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+            "id": "75315733-501f-3727-88fd-d8aa354af674",
+            "author": "johndoe",
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "date": "2019-01-01T00:00:00.000Z",
-            "from": {
-                "handle": "janedoe",
-                "name": "Jane Doe",
-                "avatar": "https://domain.com/avatar.png"
-            }
+            "created_at": "2020-01-01T00:00:00.000Z"
         },
         {
-            "id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+            "id": "75315733-501f-3727-88fd-d8aa354af674",
+            "author": "johndoe",
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            "date": "2019-01-01T00:00:00.000Z",
-            "from": {
-                "handle": "janedoe",
-                "name": "Jane Doe",
-                "avatar": "https://domain.com/avatar.png"
-            }
+            "created_at": "2020-01-01T00:00:00.000Z"
         }
     ]
 }
@@ -398,9 +422,14 @@ Envoie un message à un utilisateur.
 ```json
 {
     "success": true,
-    "code": 200,
-    "message": "OK",
-    "payload": null
+    "code": 201,
+    "message": "Created",
+    "payload": {
+        "id": "75315733-501f-3727-88fd-d8aa354af674",
+        "author": "johndoe",
+        "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "created_at": "2020-01-01T00:00:00.000Z"
+    }
 }
 ```
 
@@ -411,6 +440,7 @@ Envoie un message à un utilisateur.
 | 400 | Bad Request | Le contenu du message est manquant ou invalide |
 | 401 | Unauthorized | L'identifiant de session est invalide |
 | 404 | Not Found | L'utilisateur n'existe pas |
+| 429 | Too Many Requests | Le nombre de requêtes a été dépassé |
 | 500 | Internal Server Error | Une erreur interne est survenue |
 
 ## Notifications
@@ -421,10 +451,7 @@ Récupère la liste des notifications de l'utilisateur.
 
 #### Paramètres
 
-| Paramètre | Type | Obligatoire | Description |
-| --------- | ---- | ----------- | ----------- |
-| limit | integer | non | Le nombre de notifications à récupérer (max. 25) |
-| offset | integer | non | Le nombre de notifications à ignorer |
+Aucun paramètre n'est requis.
 
 *⚠️ Uniquement les 50 dernières notifications sont conservées, les notifications plus anciennes sont automatiquement supprimées.*
 
@@ -440,13 +467,13 @@ Récupère la liste des notifications de l'utilisateur.
     "payload": [
         {
             "id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
-            "icon": "https://domain.com/notification-icon.png",
+            "icon": "d8aa3aeafd7c4778 jpg",
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             "date": "2019-01-01T00:00:00.000Z"
         },
         {
             "id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
-            "icon": "https://domain.com/avatar.png",
+            "icon": "d8aa3aeafd7c4778 png",
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             "date": "2020-01-01T00:00:00.000Z"
         }
@@ -471,15 +498,18 @@ Récupère la liste des posts.
 
 | Paramètre | Type | Obligatoire | Description |
 | --------- | ---- | ----------- | ----------- |
+| id | string | non | L'identifiant du post à récupérer |
 | query | string | non | La chaîne de caractères à rechercher dans les titres et les descriptions |
 | limit | integer | non | Le nombre de posts à récupérer (max. 25) |
 | offset | integer | non | Le nombre de posts à ignorer |
-| fromUser | string | non | Le nom d'utilisateur de l'auteur des posts à récupérer |
-| excludeUser | string | non | Le nom d'utilisateur de l'auteur des posts à ignorer |
-| replyTo | string* | non | L'identifiant du post auquel les posts à récupérer sont des réponses |
+| fromUser | string/array | non | Le(s) auteur(s) des posts à récupérer |
+| excludeUser | string/array | non | Le(s) auteur(s) à exclure des posts à récupérer |
+| replyTo | string | non | L'identifiant du post auquel les posts à récupérer sont des réponses |
 | hasMedia | boolean | non | Si `true`, seuls les posts avec des médias seront récupérés |
 
-*Le paramètre `replyTo` peut avoir les valeurs `*` ou `none` pour récupérer les uniquement posts qui sont des réponses ou qui ne le sont pas respectivement.
+\* `fromUser` ne peut pas contenir d'utilisateurs présents dans `excludeUser`.
+
+\*\* `id` ne peut qu'être utilisé seul.
 
 #### Réponse
 
@@ -490,14 +520,14 @@ Récupère la liste des posts.
     "message": "OK",
     "payload": [
         {
-            "id": "75324802",
+            "id": "a4d46173-161f-4778-87fd-d8aa3aeafd7c",
             "author": "johndoe",
             "createdAt": "2020-01-01T00:00:00.000Z",
             "tag": 5,
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             "medias": [
-                "https://domain.com/image.png",
-                "https://domain.com/video.mp4"
+                "d8aa3aeafd7c4778 jpg",
+                "d8aa3aeafd7c4778 png"
             ],
             "likes": 15,
             "liked": false,
@@ -506,7 +536,7 @@ Récupère la liste des posts.
             "replyTo": null
         },
         {
-            "id": "12350123",
+            "id": "a4d46173-161f-4778-87fd-d8aa3aeafd7c",
             "author": "janedoe",
             "createdAt": "2020-01-01T00:00:00.000Z",
             "tag": 7,
@@ -547,14 +577,14 @@ Aucun paramètre n'est requis.
     "code": 200,
     "message": "OK",
     "payload": {
-        "id": "75324802",
+        "id": "a4d46173-161f-4778-87fd-d8aa3aeafd7c",
         "author": "johndoe",
         "createdAt": "2020-01-01T00:00:00.000Z",
         "tag": 5,
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         "medias": [
-            "https://domain.com/image.png",
-            "https://domain.com/video.mp4"
+            "d8aa3aeafd7c4778 jpg",
+            "d8aa3aeafd7c4778 png"
         ],
         "likes": 15,
         "liked": false,
@@ -595,7 +625,7 @@ Crée un nouveau post.
     "code": 201,
     "message": "Created",
     "payload": {
-        "id": "75324802"
+        "id": "a4d46173-161f-4778-87fd-d8aa3aeafd7c",
     }
 }
 ```
@@ -606,6 +636,7 @@ Crée un nouveau post.
 | ---- | ------- | ----------- |
 | 400 | Bad Request | Un des paramètres est manquant ou invalide |
 | 401 | Unauthorized | L'identifiant de session est invalide |
+| 404 | Not Found | Le post indiqué dans `replyTo` n'existe pas |
 | 500 | Internal Server Error | Une erreur interne est survenue |
 
 ### DELETE /api/posts/:id
@@ -621,8 +652,8 @@ Aucun paramètre n'est requis.
 ```json
 {
     "success": true,
-    "code": 200,
-    "message": "OK",
+    "code": 204,
+    "message": "No Content",
     "payload": null
 }
 ```
@@ -677,8 +708,8 @@ Aucun paramètre n'est requis.
 ```json
 {
     "success": true,
-    "code": 200,
-    "message": "OK",
+    "code": 204,
+    "message": "No Content",
     "payload": null
 }
 ```
