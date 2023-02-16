@@ -51,14 +51,14 @@ class User
         // Create user
         try {
             $stmt = Database::$pdo->prepare(
-                "INSERT INTO $MYSQL_USER_TABLE (handle, display_name, email, password_hash)
-                VALUES (:handle, :display_name, :email, :password_hash)"
+                "INSERT INTO $MYSQL_USER_TABLE (PK_user_handle, display_name, email, passhash)
+                VALUES (:user_handle, :display_name, :email, :passhash)"
             );
 
-            $stmt->bindParam(":handle", $handle);
+            $stmt->bindParam(":user_handle", $handle);
             $stmt->bindParam(":display_name", $display_name);
             $stmt->bindParam(":email", $email);
-            $stmt->bindParam(":password_hash", $password_hash);
+            $stmt->bindParam(":passhash", $password_hash);
 
             $stmt->execute();
 
@@ -84,10 +84,10 @@ class User
         try {
             $stmt = Database::$pdo->prepare(
                 "SELECT * FROM $MYSQL_USER_TABLE
-                WHERE handle = :handle"
+                WHERE PK_user_handle = :user_handle"
             );
 
-            $stmt->bindParam(":handle", $handle);
+            $stmt->bindParam(":user_handle", $handle);
 
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -114,10 +114,10 @@ class User
         try {
             $stmt = Database::$pdo->prepare(
                 "SELECT * FROM $MYSQL_USER_TABLE
-                WHERE handle = :handle"
+                WHERE PK_user_handle = :user_handle"
             );
 
-            $stmt->bindParam(":handle", $handle);
+            $stmt->bindParam(":user_handle", $handle);
 
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -128,10 +128,10 @@ class User
             }
 
             // Create user
-            $user = new User($result["handle"]);
+            $user = new User($result["PK_user_handle"]);
             $user->display_name = $result["display_name"];
             $user->email = $result["email"];
-            $user->password_hash = $result["password_hash"];
+            $user->password_hash = $result["passhash"];
             $user->biography = $result["biography"];
             $user->avatar_path = $result["avatar_path"];
             $user->banner_path = $result["banner_path"];
@@ -153,7 +153,7 @@ class User
      * @param int $offset - The number of users to skip
      * @return User[] - The users
      */
-    public static function fetch(string $query, int $limit, int $offset): array
+    public static function list(string $query = "", int $limit = 25, int $offset = 0): array
     {
         global $MYSQL_USER_TABLE;
 
@@ -165,7 +165,7 @@ class User
         try {
             $stmt = Database::$pdo->prepare(
                 "SELECT * FROM $MYSQL_USER_TABLE
-                WHERE handle LIKE :query
+                WHERE PK_user_handle LIKE :query
                 OR display_name LIKE :query
                 OR email LIKE :query
                 LIMIT :limit OFFSET :offset"
@@ -182,10 +182,10 @@ class User
             // Create users
             $users = [];
             foreach ($results as $result) {
-                $user = new User($result["handle"]);
+                $user = new User($result["PK_user_handle"]);
                 $user->display_name = $result["display_name"];
                 $user->email = $result["email"];
-                $user->password_hash = $result["password_hash"];
+                $user->password_hash = $result["passhash"];
                 $user->biography = $result["biography"];
                 $user->avatar_path = $result["avatar_path"];
                 $user->banner_path = $result["banner_path"];
@@ -241,7 +241,7 @@ class User
                 $update_text .= "email = :email, ";
 
             if ($password_hash !== null)
-                $update_text .= "password_hash = :password_hash, ";
+                $update_text .= "passhash = :passhash, ";
 
             if ($biography !== null)
                 $update_text .= "biography = :biography, ";
@@ -258,7 +258,7 @@ class User
             $stmt = Database::$pdo->prepare(
                 "UPDATE $MYSQL_USER_TABLE
                 SET $update_text
-                WHERE handle = :handle"
+                WHERE PK_user_handle = :user_handle"
             );
 
             if ($display_name !== null)
@@ -268,7 +268,7 @@ class User
                 $stmt->bindParam(":email", $email);
 
             if ($password_hash !== null)
-                $stmt->bindParam(":password_hash", $password_hash);
+                $stmt->bindParam(":passhash", $password_hash);
 
             if ($biography !== null)
                 $stmt->bindParam(":biography", $biography);
@@ -279,7 +279,7 @@ class User
             if ($banner_path !== null)
                 $stmt->bindParam(":banner_path", $banner_path);
 
-            $stmt->bindParam(":handle", $handle);
+            $stmt->bindParam(":user_handle", $handle);
 
             $stmt->execute();
 
