@@ -28,19 +28,19 @@ class User
      * @param string|null $display_name - The user's display name
      * @param string $email - The user's email
      * @param string $password_hash - The user's password hash
-     * @return void
+     * @return null|int - Null if successful, error code otherwise
      */
     public static function create(
         string $handle,
         string $display_name = null,
         string $email,
         string $password_hash,
-    ) {
+    ): null|int {
         global $MYSQL_USER_TABLE;
 
         // Check if user exists
         if (self::exists($handle)) {
-            Response::error(409, "User already exists");
+            return 409;
         }
 
         // Set default display name
@@ -65,8 +65,7 @@ class User
             // Return
             return;
         } catch (PDOException $e) {
-            // Send an error message
-            Response::error(500, $e->getMessage());
+            return 500;
         }
     }
 
@@ -74,9 +73,9 @@ class User
      * Check if a handle is used by a user or not
      *
      * @param string $handle - The user's handle
-     * @return boolean - True if the handle is used by a user, false otherwise
+     * @return bool|int - True if the user exists, false otherwise, or an error code
      */
-    public static function exists(string $handle): bool
+    public static function exists(string $handle): bool|int
     {
         global $MYSQL_USER_TABLE;
 
@@ -95,8 +94,7 @@ class User
             // Return true if user exists
             return $result !== false;
         } catch (PDOException $e) {
-            // Send an error message
-            Response::error(500, $e->getMessage());
+            return 500;
         }
     }
 
@@ -104,9 +102,9 @@ class User
      * Get a user by their handle
      *
      * @param string $handle - The user's handle
-     * @return User - The user
+     * @return User|int - The user, or an error code
      */
-    public static function get(string $handle): User
+    public static function get(string $handle): User|int
     {
         global $MYSQL_USER_TABLE;
 
@@ -124,7 +122,7 @@ class User
 
             // Check if user exists
             if ($result === false) {
-                Response::error(404, "User not found");
+                return 404;
             }
 
             // Create user
@@ -140,8 +138,7 @@ class User
             // Return user
             return $user;
         } catch (PDOException $e) {
-            // Send an error message
-            Response::error(500, $e->getMessage());
+            return 500;
         }
     }
 
@@ -151,9 +148,9 @@ class User
      * @param string $query - The query to search for (handle, display name, email)
      * @param int $limit - The maximum number of users to fetch
      * @param int $offset - The number of users to skip
-     * @return User[] - The users
+     * @return array|int - An array of users or an error code
      */
-    public static function list(string $query = "", int $limit = 25, int $offset = 0): array
+    public static function list(string $query = "", int $limit = 25, int $offset = 0): array|int
     {
         global $MYSQL_USER_TABLE;
 
@@ -197,8 +194,7 @@ class User
             // Return users
             return $users;
         } catch (PDOException $e) {
-            // Send an error message
-            Response::error(500, $e->getMessage());
+            return 500;
         }
     }
 
@@ -212,7 +208,7 @@ class User
      * @param string|null $biography - The user's biography
      * @param string|null $avatar_path - The user's avatar path
      * @param string|null $banner_path - The user's banner path
-     * @return void
+     * @return null|int - Null if successful, the error code otherwise
      */
     public static function update(
         string $handle,
@@ -222,12 +218,12 @@ class User
         string $biography = null,
         string $avatar_path = null,
         string $banner_path = null,
-    ) {
+    ): null|int {
         global $MYSQL_USER_TABLE;
 
         // Check if user exists
         if (!self::exists($handle)) {
-            Response::error(404, "User not found");
+            return 404;
         }
 
         // Update user
@@ -286,8 +282,7 @@ class User
             // Return
             return;
         } catch (PDOException $e) {
-            // Send an error message
-            Response::error(500, $e->getMessage());
+            return 500;
         }
     }
 }

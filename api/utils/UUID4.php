@@ -5,7 +5,7 @@
  *
  * @return string UUID v4
  */
-function generate_uuid($data = null)
+function generate_uuid($data = null): string
 {
     // Generate 16 random bytes
     $data = $data ?? random_bytes(16);
