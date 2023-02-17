@@ -13,7 +13,7 @@
     RewriteRule ^register$ register.html [QSA,END]
 
     # Redirect /api/* to /api/*.php
-    RewriteRule ^api/(.*)$ api/$1.php [QSA,END]
+    RewriteRule ^api/(.*)$ api/routes/$1.php [QSA,END]
 
     # Redirect /... to /index.html?page=...
     RewriteCond %{REQUEST_FILENAME} !-f
