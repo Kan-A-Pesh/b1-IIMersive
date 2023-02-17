@@ -63,7 +63,7 @@ class User
             $stmt->execute();
 
             // Return
-            return;
+            return null;
         } catch (PDOException $e) {
             return 500;
         }
@@ -280,7 +280,7 @@ class User
             $stmt->execute();
 
             // Return
-            return;
+            return null;
         } catch (PDOException $e) {
             return 500;
         }

@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:8.2.3-apache
 
 # Copy config files
 COPY conf/apache2.conf /etc/apache2/apache2.conf

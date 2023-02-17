@@ -5,7 +5,7 @@ class Database
 
     public static $pdo = null;
 
-    function __construct()
+    public static function init()
     {
         global $MYSQL_HOST, $MYSQL_PORT, $MYSQL_DB, $MYSQL_USER, $MYSQL_PASS;
 
@@ -25,3 +25,5 @@ class Database
         }
     }
 }
+
+Database::init();
