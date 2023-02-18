@@ -78,14 +78,12 @@ class Session
     }
 
     /**
-     * Update a session's expiration date
+     * Update a session's expiration date (add 15 minutes)
      * 
      * @param string $session_id - The session's id
-     * @param string $ip - The user's IP address
-     * @param string $user_agent - The user's user agent
      * @return null|int - Null if successful, an error code otherwise
      */
-    public static function update(string $session_id, string $ip, string $user_agent): null|int
+    public static function update(string $session_id): null|int
     {
         global $MYSQL_SESSION_TABLE;
 
@@ -93,28 +91,16 @@ class Session
         $expires_at = new DateTime("+15 minutes");
         $expires_at_string = $expires_at->format("Y-m-d H:i:s");
 
-        // Check if session exists and is valid
-        $session = self::get($session_id);
-        if ($session === null) {
-            return 404;
-        } else if (!$session->isValid()) {
-            return 410;
-        } else if ($session->ip !== $ip || $session->user_agent !== $user_agent) {
-            return 401;
-        }
-
         // Update session
         try {
             $stmt = Database::$pdo->prepare(
                 "UPDATE $MYSQL_SESSION_TABLE
-                SET expires_at = :expires_at, ip = :ip, user_agent = :user_agent
+                SET expires_at = :expires_at
                 WHERE PK_session_id = :session_id"
             );
 
             $stmt->bindParam(":session_id", $session_id);
             $stmt->bindParam(":expires_at", $expires_at_string);
-            $stmt->bindParam(":ip", $ip);
-            $stmt->bindParam(":user_agent", $user_agent);
 
             $stmt->execute();
 
@@ -196,5 +182,4 @@ class Session
             return 500;
         }
     }
-
 }

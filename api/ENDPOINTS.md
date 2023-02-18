@@ -76,6 +76,36 @@ Aucune réponse n'est renvoyée, le code HTTP est 204.
 
 ## Authentification
 
+### GET /api/auth
+
+Récupère les informations de la session de l'utilisateur.
+
+#### Paramètres
+
+Aucun paramètre n'est requis.
+
+#### Réponse
+
+```json
+{
+    "success": true,
+    "code": 200,
+    "message": "OK",
+    "payload": {
+        "session_id": "4d461733-161f-4778-87fd-d8aa3aeafd7c",
+        "expires": "2019-01-01T00:00:00.000Z",
+        "user_handle": "johndoe"
+    }
+}
+```
+
+#### Erreurs
+
+| Code | Message | Description |
+| ---- | ------- | ----------- |
+| 401 | Unauthorized | L'identifiant de session est invalide |
+| 500 | Internal Server Error | Une erreur interne est survenue |
+
 ### POST /api/auth
 
 Authentifie un utilisateur.
@@ -84,11 +114,8 @@ Authentifie un utilisateur.
 
 | Paramètre | Type | Obligatoire | Description |
 | --------- | ---- | ----------- | ----------- |
-| email | string | non* | L'adresse email de l'utilisateur |
-| handle | string | non* | Le nom d'utilisateur de l'utilisateur |
+| handle | string | oui | L'handle de l'utilisateur |
 | password | string | oui | Le mot de passe de l'utilisateur |
-
-*Un des deux paramètres est obligatoire.
 
 #### Réponse
 
@@ -109,8 +136,8 @@ Authentifie un utilisateur.
 
 | Code | Message | Description |
 | ---- | ------- | ----------- |
-| 400 | Bad Request | Un des paramètres est manquant ou invalide |
-| 401 | Unauthorized | L'adresse email ou le nom d'utilisateur et/ou le mot de passe sont incorrects |
+| 400 | Bad Request | Un des paramètres est manquant ou invalide ou l'utilisateur est déjà connecté |
+| 401 | Unauthorized | L'handle d'utilisateur et/ou le mot de passe sont incorrects |
 | 500 | Internal Server Error | Une erreur interne est survenue |
 
 ### PUT /api/auth
