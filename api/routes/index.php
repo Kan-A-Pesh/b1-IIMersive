@@ -1,4 +1,4 @@
-<?php include_once(__DIR__ . "/../includes.php");
+<?php
 
 // Check if tables exist
 try {

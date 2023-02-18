@@ -12,8 +12,8 @@
     # Redirect /register to /register.html
     RewriteRule ^register$ register.html [QSA,END]
 
-    # Redirect /api/* to /api/*.php
-    RewriteRule ^api/(.*)$ api/routes/$1.php [QSA,END]
+    # Redirect /api/* to /api/index.php?path=...
+    RewriteRule ^api/(.*)$ api/index.php?path=$1 [QSA,END]
 
     # Redirect /... to /index.html?page=...
     RewriteCond %{REQUEST_FILENAME} !-f
