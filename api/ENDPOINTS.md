@@ -296,7 +296,8 @@ Crée un nouvel utilisateur.
     "code": 201,
     "message": "Created",
     "payload": {
-        "sessionId": "4d461733-161f-4778-87fd-d8aa3aeafd7c"
+        "handle": "johndoe",
+        "email": "john.doe@mail.com"
     }
 }
 ```
@@ -306,7 +307,7 @@ Crée un nouvel utilisateur.
 | Code | Message | Description |
 | ---- | ------- | ----------- |
 | 400 | Bad Request | Un des paramètres est manquant ou invalide |
-| 409 | Conflict | L'adresse email ou le nom d'utilisateur est déjà utilisé |
+| 409 | Conflict | Le nom d'utilisateur est déjà utilisé |
 | 500 | Internal Server Error | Une erreur interne est survenue |
 
 ### PUT /api/users/:handle
@@ -342,6 +343,7 @@ Modifie les informations d'un utilisateur.
 | ---- | ------- | ----------- |
 | 400 | Bad Request | Un des paramètres est manquant ou invalide |
 | 401 | Unauthorized | L'identifiant de session est invalide |
+| 403 | Forbidden | L'utilisateur n'a pas les droits d'accès |
 | 404 | Not Found | L'utilisateur n'existe pas |
 | 409 | Conflict | L'adresse email ou le nom d'utilisateur est déjà utilisé |
 | 429 | Too Many Requests | Le nombre de requêtes a été dépassé |

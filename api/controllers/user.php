@@ -28,14 +28,14 @@ class User
      * @param string|null $display_name - The user's display name
      * @param string $email - The user's email
      * @param string $password_hash - The user's password hash
-     * @return null|int - Null if successful, error code otherwise
+     * @return User|int - The user, or an error code
      */
     public static function create(
         string $handle,
-        string $display_name = null,
         string $email,
         string $password_hash,
-    ): null|int {
+        string $display_name = null
+    ): User|int {
         global $MYSQL_USER_TABLE;
 
         // Check if user exists
@@ -62,8 +62,17 @@ class User
 
             $stmt->execute();
 
-            // Return
-            return null;
+            // Return user
+            $user = new User($handle);
+            $user->display_name = $display_name;
+            $user->email = $email;
+            $user->password_hash = $password_hash;
+            $user->biography = "";
+            $user->avatar_path = "";
+            $user->banner_path = "";
+            $user->created_at = new DateTime();
+
+            return $user;
         } catch (PDOException $e) {
             return 500;
         }
