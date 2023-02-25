@@ -12,6 +12,9 @@
     # Redirect /register to /register.html
     RewriteRule ^register$ register.html [QSA,END]
 
+    # Redirect /confirm to /confirm.php
+    RewriteRule ^confirm(.*)$ confirm.php?token=$1 [QSA,END]
+
     # Redirect /api/* to /api/index.php?path=...
     RewriteRule ^api/(.*)$ api/index.php?path=$1 [QSA,END]
 

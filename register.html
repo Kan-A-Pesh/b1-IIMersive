@@ -17,11 +17,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+
+        <script src="js/api.js"></script>
+        <script src="js/auth/register.js" defer></script>
 </head>
 
 <body class="text-center d-flex align-items-center row text-white m-0 bg-black vh-100">
     <main class="form-signin col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-3 m-auto">
-        <form class="d-flex flex-column align-items-start">
+        <div class="d-flex flex-column align-items-start">
             <h1 class="align-self-center mb-4"><span class="color-primary">IIM</span>ersive</h1>
             <h2 class="h4 mb-3 fw-normal opacity-50">Créer un compte</h2>
 
@@ -44,20 +47,22 @@
             </div>
 
             <div class="form-floating w-100 mb-3">
-                <input type="password" class="form-control bg-dark border-0 text-white bg-opacity-50" id="password"
+                <input type="password" class="form-control bg-dark border-0 text-white bg-opacity-50" id="repassword"
                     placeholder=" " />
-                <label for="password" class="opacity-25">Confirmer le mot de passe</label>
+                <label for="repassword" class="opacity-25">Confirmer le mot de passe</label>
             </div>
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Créer un compte</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit" id="submit">Créer un compte</button>
+
+            <p id="error" class="text-danger"></p>
 
             <hr class="align-self-stretch m-4 border-opacity-10">
 
             <div class="d-flex w-100 justify-content-between align-items-center flex-column flex-sm-row gap-2">
-                <a href="/login.html" class="text-decoration-none">Déjà un compte ?</a>
+                <a href="/login" class="text-decoration-none">Déjà un compte ?</a>
                 <a href="/" class="text-decoration-none">Retour à l'accueil</a>
             </div>
-        </form>
+        </div>
     </main>
 </body>
 

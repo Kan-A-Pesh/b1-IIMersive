@@ -41,12 +41,6 @@ const login = async (event) => {
 
     passwordInput.value = '';
 
-    if (handle === '' || password === '')
-    {
-        logError('Please enter a username and password.');
-        return;
-    }
-
     toggleDisabled(true);
 
     try {
@@ -84,8 +78,8 @@ const update = () => {
 
 loginButton.addEventListener('click', login);
 
-handleInput.addEventListener('input', () => update());
-passwordInput.addEventListener('input', () => update());
+handleInput.addEventListener('input', update);
+passwordInput.addEventListener('input', update);
 
 if (USER_HANDLE !== null)
 {
