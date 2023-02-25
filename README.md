@@ -45,7 +45,8 @@ Les informations de connexion à la base de données sont à renseigner dans le 
 
 ## 📜 Documentation
 
-[ENDPOINTS.md](api/ENDPOINTS.md) : Liste des endpoints de l'API
+[ENDPOINTS.md](api/ENDPOINTS.md) : Liste des endpoints de l'API\
+[MEDIA.md](media/MEDIA.md) : Fonctionnement du système de médias
 
 ## 📝 Fonctionnalités
 
