@@ -12,6 +12,8 @@ Il s'agit d'un réseau social permettant de partager des textes et des images, d
 Le projet est réalisé avec un front-end en HTML/CSS/JS natif, sauf pour les pages de connexion et d'inscription qui sont réalisées à l'aide de Bootstrap.\
 Le back-end est réalisé en PHP natif, avec une base de données MySQL.
 
+Pour plus d'informations sur l'avancement du projet, vous pouvez consulter le [Trello](https://trello.com/b/rL5aaxOq/iimersive-todo).
+
 ## ⚡️ Installation
 
 Le projet nécessite un serveur web Apache, PHP et MySQL.
@@ -59,6 +61,8 @@ Les informations de connexion à la base de données sont à renseigner dans le 
 - Affichage des posts les plus populaires
 - Affichage des comptes les plus populaires
 - Bien plus à venir...
+
+Pour plus d'informations sur le suivi du projet, vous pouvez consulter le [Trello](https://trello.com/b/rL5aaxOq/iimersive-todo).
 
 ## 📂 Structure du projet
 
