@@ -18,19 +18,20 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 
-    <script src="js/auth/login.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth/login.js" defer></script>
 </head>
 
 <body class="text-center d-flex align-items-center row text-white m-0 vh-100 bg-black">
     <main class="form-signin col-11 col-sm-8 col-md-6 col-lg-5 col-xl-4 col-xxl-3 m-auto">
-        <form class="d-flex flex-column align-items-start">
+        <div class="d-flex flex-column align-items-start">
             <h1 class="align-self-center mb-4"><span class="color-primary">IIM</span>ersive</h1>
             <h2 class="h4 mb-3 fw-normal opacity-50">Se connecter</h2>
 
             <div class="form-floating w-100 mb-3">
                 <input type="text" class="form-control bg-dark border-0 text-white bg-opacity-50" id="username"
                     placeholder=" " />
-                <label for="username" class="opacity-25">Adresse email / Nom d'utilisateur</label>
+                <label for="username" class="opacity-25">Nom d'utilisateur</label>
             </div>
             <div class="form-floating w-100">
                 <input type="password" class="form-control bg-dark border-0 text-white bg-opacity-50" id="password"
@@ -42,12 +43,14 @@
                 class="d-flex w-100 mb-3 mt-3 justify-content-between align-items-center flex-column flex-sm-row gap-1">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="remember-me" /> Se souvenir de moi
+                        <input type="checkbox" value="remember-me" id="rememberMe" /> Se souvenir de moi
                     </label>
                 </div>
                 <a href="forgot-password.html" class="text-decoration-none">Mot de passe oublié ?</a>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Connexion</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit" id="submit">Connexion</button>
+
+            <p id="error" class="text-danger"></p>
 
             <hr class="align-self-stretch m-4 border-opacity-10">
 
@@ -55,7 +58,7 @@
                 <a href="register.html" class="text-decoration-none">Créer un compte</a>
                 <a href="/" class="text-decoration-none">Retour à l'accueil</a>
             </div>
-        </form>
+        </div>
     </main>
 </body>
 
