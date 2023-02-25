@@ -29,30 +29,9 @@ Ou, dans le cas d'une erreur:
 
 ## Ressources
 
-Les ressources (images, médias, vidéos etc..) sont accessibles via le chemin `/media/<id>.<extension>`.
+Les ressources (images, médias, vidéos etc..) sont accessibles via le chemin `/media/<snowflake>`.
 
-Les identifiants des ressources sont des chaînes de caractères aléatoires de **16 caractères**,
-générées par le serveur lors de l'upload de la ressource.
-
-Les extensions dépendent du type de ressource envoyée, pour un maximum de **4 caractères**.
-Actuellement, seules les extensions suivantes sont autorisées:
-
-- `.png`
-- `.jpg`
-- `.jpeg`
-- `.gif`
-- `.mp4`
-- `.webm`
-- `.ogg`
-- `.mp3`
-- `.wav`
-
-Les ressources envoyées ne doivent pas dépasser **2 Mo** (**8Mo** pour les vidéos) à l'upload.
-Une fois le fichier uploadé, il est redimensionné si nécessaire, compressé et nettoyé pour effacer les métadonnées.
-
-A la récuperation d'un ressource, le serveur renvoie un texte de 20 caractères,
-les 16 premiers étant l'identifiant de la ressource, et les 4 derniers étant l'extension de la ressource.
-*Exemple:* `87fdd8aa3aeafd7c png` (identifiant: `87fdd8aa3aeafd7c`, extension: `.png`).
+Pour en savoir plus sur les ressources, voir [MEDIA.md](media/MEDIA.md).
 
 ## Status
 
@@ -527,7 +506,6 @@ Récupère la liste des posts.
 
 | Paramètre | Type | Obligatoire | Description |
 | --------- | ---- | ----------- | ----------- |
-| id | string | non | L'identifiant du post à récupérer |
 | query | string | non | La chaîne de caractères à rechercher dans les titres et les descriptions |
 | limit | integer | non | Le nombre de posts à récupérer (max. 25) |
 | offset | integer | non | Le nombre de posts à ignorer |
@@ -537,8 +515,6 @@ Récupère la liste des posts.
 | hasMedia | boolean | non | Si `true`, seuls les posts avec des médias seront récupérés |
 
 \* `fromUser` ne peut pas contenir d'utilisateurs présents dans `excludeUser`.
-
-\*\* `id` ne peut qu'être utilisé seul.
 
 #### Réponse
 
