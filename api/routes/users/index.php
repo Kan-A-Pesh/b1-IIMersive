@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     // Create user
     $password_hash = Cypher::hash($_POST["password"]);
-    $user = User::create($_POST["handle"], $password_hash, $_POST["email"]);
+    $user = User::create($_POST["handle"], $_POST["email"], $password_hash);
 
     if ($user === 500)
         Response::error();
