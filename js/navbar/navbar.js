@@ -20,7 +20,11 @@ document
     .querySelector("nav #search-submit")
     .addEventListener("click", () => {
         const search = document.querySelector("nav #search-input").value;
-        loadPage(`home?q=${search}`);
+        
+        if (search === "")
+            loadPage("home");
+        else
+            loadPage(`home?q=${search}`);
     });
 
 // Sidebar links

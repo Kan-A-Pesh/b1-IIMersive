@@ -9,11 +9,16 @@
         }
         loading = true;
 
-        const posts = await GET('/posts', {
-            query: queryParams.q || null,
+        params = {
             limit: 25,
             offset: page * 25
-        });
+        }
+
+        if (queryParams.q) {
+            params.query = queryParams.q;
+        }
+
+        const posts = await GET('/posts', params);
 
         for (let i = 0; i < posts.payload.length; i++) {
             const post = posts.payload[i];
