@@ -22,11 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         Response::error(401, "User is not authenticated");
 
     // Check if user is post owner
-    if ($post->author_handle !== $_AUTH["user"]->getHandle())
+    if ($post->author_handle !== $_AUTH["user"]->handle)
         Response::error(403, "User is not post owner");
 
     // Delete post
-    $result = Post::delete($post->getId());
+    $result = Post::delete($post->id);
 
     if ($result === 500)
         Response::error();

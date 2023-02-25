@@ -31,7 +31,7 @@ Ou, dans le cas d'une erreur:
 
 Les ressources (images, médias, vidéos etc..) sont accessibles via le chemin `/media/<snowflake>`.
 
-Pour en savoir plus sur les ressources, voir [MEDIA.md](media/MEDIA.md).
+Pour en savoir plus sur les ressources, voir [MEDIA.md](/media/MEDIA.md).
 
 ## Status
 
@@ -668,6 +668,33 @@ Aucun paramètre n'est requis.
 | Code | Message | Description |
 | ---- | ------- | ----------- |
 | 400 | Bad Request | Un des paramètres est manquant ou invalide |
+| 401 | Unauthorized | L'identifiant de session est invalide |
+| 404 | Not Found | Le post n'existe pas |
+| 500 | Internal Server Error | Une erreur interne est survenue |
+
+### GET /api/posts/:id/like
+
+Retourne si l'utilisateur a liké le post.
+
+#### Paramètres
+
+Aucun paramètre n'est requis.
+
+#### Réponse
+
+```json
+{
+    "success": true,
+    "code": 200,
+    "message": "Post liked",
+    "payload": true
+}
+```
+
+#### Erreurs
+
+| Code | Message | Description |
+| ---- | ------- | ----------- |
 | 401 | Unauthorized | L'identifiant de session est invalide |
 | 404 | Not Found | Le post n'existe pas |
 | 500 | Internal Server Error | Une erreur interne est survenue |

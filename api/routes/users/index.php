@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     // Return user
     Response::success(201, "User created", [
-        "user_handle" => $user->getHandle(),
+        "user_handle" => $user->handle,
         "email" => $user->email
     ]);
 } else {

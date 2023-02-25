@@ -9,7 +9,20 @@ const USER_HANDLE =
     null;
 
 const parseResponse = async (response) => {
-    const json = await response.json();
+    if (response.status === 401) {
+        document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+        window.location.href = "/login";
+    }
+
+    const text = await response.text();
+    if (!text.startsWith('{'))
+    {
+        console.log(text);
+        throw text;
+    }
+
+    const json = JSON.parse(text);
+    //const json = await response.json();
 
     if (json.success === false)
         throw json;
@@ -73,3 +86,67 @@ const DELETE = async (url, body) => {
     
     return await parseResponse(response);
 };
+
+const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+const videoExtensions = ['mp4', 'webm', 'ogg'];
+const audioExtensions = ['mp3', 'wav'];
+
+const parseMedia = (media, defaultMedia) => {
+    if (!media)
+        return defaultMedia;
+
+    const id = media.substring(0, 16);
+    const ext = media.substring(16, 20).trim();
+    
+    if (imageExtensions.includes(ext))
+    {
+        return `<img src="/media/${id}.${ext}" />`;
+    }
+    else if (videoExtensions.includes(ext))
+    {
+        return `<video src="/media/${id}.${ext}" controls />`;
+    }
+    else if (audioExtensions.includes(ext))
+    {
+        return `<audio src="/media/${id}.${ext}" controls />`;
+    }
+
+    return "/media/" + id + "." + ext;
+};
+
+const parseDate = (apiDate) => {
+    const {date, timezone_type, timezone} = apiDate;
+    return new Date(date);
+};
+
+const toRelativeTime = (date) => {
+    const seconds = Math.floor((new Date() - date) / 1000);
+
+    if (seconds < 15)
+        return 'maintenant';
+
+    if (seconds < 60)
+        return seconds + 's';
+    
+    minutes = Math.floor(seconds / 60);
+    if (minutes < 60)
+        return minutes + 'm';
+
+    hours = Math.floor(minutes / 60);
+    if (hours < 24)
+        return hours + 'h';
+
+    days = Math.floor(hours / 24);
+    if (days < 7)
+        return days + 'j';
+
+    weeks = Math.floor(days / 7);
+    if (weeks < 52)
+        return weeks + 'sem.';
+
+    years = Math.floor(weeks / 52);
+    if (years < 10)
+        return years + 'ans';
+
+    return 'longtemps! (oups)';
+}

@@ -22,11 +22,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($user === 404)
         Response::error(401, "Incorrect handle or password");
 
-    if (!Cypher::verify($_POST["password"], $user->password_hash))
+    if (!Cypher::verify($_POST["password"], $user->get_password_hash()))
         Response::error(401, "Incorrect handle or password");
 
     // Create session
-    $userHandle = $user->getHandle();
+    $userHandle = $user->handle;
     $ip = $_SERVER["REMOTE_ADDR"];
     $userAgent = $_SERVER["HTTP_USER_AGENT"];
 
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     Response::success(200, "User authenticated", [
         "session_id" => $_AUTH["session"]->getId(),
         "expires" => $_AUTH["session"]->expires_at->format("Y-m-d H:i:s"),
-        "user_handle" => $_AUTH["user"]->getHandle()
+        "user_handle" => $_AUTH["user"]->handle
     ]);
 } else {
     Response::error(405, "Method not allowed");

@@ -81,9 +81,9 @@ class Session
      * Update a session's expiration date (add 15 minutes)
      * 
      * @param string $session_id - The session's id
-     * @return null|int - Null if successful, an error code otherwise
+     * @return ?int - Null if successful, an error code otherwise
      */
-    public static function update(string $session_id): null|int
+    public static function update(string $session_id): ?int
     {
         global $MYSQL_SESSION_TABLE;
 
@@ -158,9 +158,9 @@ class Session
      * Delete a session
      * 
      * @param string $session_id - The session's id
-     * @return null|int - Null if successful, an error code otherwise
+     * @return ?int - Null if successful, an error code otherwise
      */
-    public static function delete(string $session_id): null|int
+    public static function delete(string $session_id): ?int
     {
         global $MYSQL_SESSION_TABLE;
 

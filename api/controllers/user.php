@@ -2,10 +2,10 @@
 
 class User
 {
-    private string $handle;
+    public string $handle;
     public string $display_name;
     public string $email;
-    public string $password_hash;
+    private string $password_hash;
     public string $biography;
     public string $avatar_path;
     public string $banner_path;
@@ -16,25 +16,30 @@ class User
         $this->handle = $handle;
     }
 
-    public function getHandle(): string
+    public function get_password_hash(): string
     {
-        return $this->handle;
+        return $this->password_hash;
+    }
+
+    public function set_password_hash(string $password_hash): void
+    {
+        $this->password_hash = $password_hash;
     }
 
     /**
      * Create a new user
      *
      * @param string $handle - The user's handle
-     * @param string|null $display_name - The user's display name
      * @param string $email - The user's email
      * @param string $password_hash - The user's password hash
+     * @param ?string $display_name - The user's display name
      * @return User|int - The user, or an error code
      */
     public static function create(
         string $handle,
         string $email,
         string $password_hash,
-        string $display_name = null
+        ?string $display_name = null
     ): User|int {
         global $MYSQL_USER_TABLE;
 
@@ -66,7 +71,7 @@ class User
             $user = new User($handle);
             $user->display_name = $display_name;
             $user->email = $email;
-            $user->password_hash = $password_hash;
+            $user->set_password_hash($password_hash);
             $user->biography = "";
             $user->avatar_path = "";
             $user->banner_path = "";
@@ -138,7 +143,7 @@ class User
             $user = new User($result["PK_user_handle"]);
             $user->display_name = $result["display_name"];
             $user->email = $result["email"];
-            $user->password_hash = $result["passhash"];
+            $user->set_password_hash($result["passhash"]);
             $user->biography = $result["biography"] ?? "";
             $user->avatar_path = $result["avatar_path"] ?? "";
             $user->banner_path = $result["banner_path"] ?? "";
@@ -191,7 +196,7 @@ class User
                 $user = new User($result["PK_user_handle"]);
                 $user->display_name = $result["display_name"];
                 $user->email = $result["email"];
-                $user->password_hash = $result["passhash"];
+                $user->set_password_hash($result["passhash"]);
                 $user->biography = $result["biography"];
                 $user->avatar_path = $result["avatar_path"];
                 $user->banner_path = $result["banner_path"];
@@ -211,23 +216,23 @@ class User
      * Update a user data
      * 
      * @param string $handle - The user's handle
-     * @param string|null $display_name - The user's display name
-     * @param string|null $email - The user's email
-     * @param string|null $password_hash - The user's password hash
-     * @param string|null $biography - The user's biography
-     * @param string|null $avatar_path - The user's avatar path
-     * @param string|null $banner_path - The user's banner path
-     * @return null|int - Null if successful, the error code otherwise
+     * @param ?string $display_name - The user's display name
+     * @param ?string $email - The user's email
+     * @param ?string $password_hash - The user's password hash
+     * @param ?string $biography - The user's biography
+     * @param ?string $avatar_path - The user's avatar path
+     * @param ?string $banner_path - The user's banner path
+     * @return ?int - Null if successful, the error code otherwise
      */
     public static function update(
         string $handle,
-        string $display_name = null,
-        string $email = null,
-        string $password_hash = null,
-        string $biography = null,
-        string $avatar_path = null,
-        string $banner_path = null,
-    ): null|int {
+        ?string $display_name = null,
+        ?string $email = null,
+        ?string $password_hash = null,
+        ?string $biography = null,
+        ?string $avatar_path = null,
+        ?string $banner_path = null,
+    ): ?int {
         global $MYSQL_USER_TABLE;
 
         // Check if user exists

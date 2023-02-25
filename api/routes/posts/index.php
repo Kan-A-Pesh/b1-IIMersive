@@ -28,55 +28,29 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         Response::error(400, "Invalid offset");
 
     // fromUser
-    $fromUserArray = [];
+    $fromUserObject = null;
     if ($fromUser !== null) {
         if (!is_string($fromUser))
             Response::error(400, "Invalid fromUser");
 
-        if (strpos($fromUser, ",") !== false) {
-            $fromUser = explode(",", $fromUser);
-            foreach ($fromUser as $user) {
-                if (!is_string($user))
-                    Response::error(400, "Invalid fromUser");
-            }
-        } else
-            $fromUser = [$fromUser];
-
-        foreach ($fromUser as $user) {
-            $user = User::get($user);
-            if ($user === 500)
-                Response::error();
-            if ($user === 404)
-                Response::error(404, "User not found");
-
-            $fromUserArray[] = $user;
-        }
+        $fromUserObject = User::get($fromUser);
+        if ($fromUserObject === 500)
+            Response::error();
+        if ($fromUserObject === 404)
+            Response::error(404, "User not found");
     }
 
     // excludeUser
-    $excludeUserArray = [];
+    $excludeUserObject = null;
     if ($excludeUser !== null) {
         if (!is_string($excludeUser))
             Response::error(400, "Invalid excludeUser");
 
-        if (strpos($excludeUser, ",") !== false) {
-            $excludeUser = explode(",", $excludeUser);
-            foreach ($excludeUser as $user) {
-                if (!is_string($user))
-                    Response::error(400, "Invalid excludeUser");
-            }
-        } else
-            $excludeUser = [$excludeUser];
-
-        foreach ($excludeUser as $user) {
-            $user = User::get($user);
-            if ($user === 500)
-                Response::error();
-            if ($user === 404)
-                Response::error(404, "User not found");
-
-            $excludeUserArray[] = $user;
-        }
+        $excludeUserObject = User::get($excludeUser);
+        if ($excludeUserObject === 500)
+            Response::error();
+        if ($excludeUserObject === 404)
+            Response::error(404, "User not found");
     }
 
     // replyTo
@@ -99,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     // Get posts
     $posts = Post::get_all(
         $query,
-        $fromUserArray,
-        $excludeUserArray,
+        $fromUserObject,
+        $excludeUserObject,
         $replyToPost ?? null,
         $hasMedia,
         $limit,

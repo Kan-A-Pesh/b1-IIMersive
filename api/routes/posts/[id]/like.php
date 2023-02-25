@@ -15,14 +15,21 @@ if ($_AUTH === null)
     Response::error(401, "User is not authenticated");
 
 // Check method
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
+
+    // Get likes
+    if (Post::is_liked($post->id, $_AUTH["user"]->handle))
+        Response::success(200, "Post liked", true);
+    else
+        Response::success(200, "Post not liked", false);
+} else if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Check if user already liked post
-    if (Post::is_liked($post->getId(), $_AUTH["user"]->getHandle()))
+    if (Post::is_liked($post->id, $_AUTH["user"]->handle))
         Response::error(409, "User already liked post");
 
     // Like post
-    $result = Post::like_post($post->getId(), $_AUTH["user"]->getHandle());
+    $result = Post::like_post($post->id, $_AUTH["user"]->handle);
 
     if ($result === 500)
         Response::error();
@@ -32,13 +39,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 } else if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
 
     // Check if user already liked post
-    if (!Post::is_liked($post->getId(), $_AUTH["user"]->getHandle()))
+    if (!Post::is_liked($post->id, $_AUTH["user"]->handle))
         Response::error(409, "User did not like post");
 
     // Unlike post
-    $result = Post::unlike_post($post->getId(), $_AUTH["user"]->getHandle());
+    $result = Post::unlike_post($post->id, $_AUTH["user"]->handle);
 
-    if ($unlike === 500)
+    if ($result === 500)
         Response::error();
 
     // Return unlike

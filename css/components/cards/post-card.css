@@ -11,7 +11,11 @@
     border-radius: 50%;
 }
 
-.feed-post>.header>.info>.names {
+.feed-post>.header>.info a {
+    color: var(--text-color);
+}
+
+.feed-post>.header>.info .names {
     display: flex;
     gap: 8px;
     margin-bottom: 4px;

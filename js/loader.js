@@ -48,6 +48,9 @@ const loadPage = (page) => {
     if (previousScript) {
         previousScript.remove();
     }
+
+    // Update URL
+    window.history.pushState({}, page, `/${page}`);
 }
 
 // Load from URL parameter
@@ -62,8 +65,5 @@ menuLinks.forEach((link) => {
 
         const page = link.getAttribute('href').substring(1);
         loadPage(page);
-
-        // Update URL
-        window.history.pushState({}, page, `/${page}`);
     });
 });

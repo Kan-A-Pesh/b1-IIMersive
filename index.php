@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/components/index.css">
 
+    <script src="/js/api.js"></script>
     <script defer src="/js/theme.js"></script>
     <script defer src="/js/loader.js"></script>
     <script defer src="/js/navbar/navbar.js"></script>
@@ -69,7 +70,7 @@
                         <h2>Paramètres</h2>
                     </div>
                 </a>
-                <div class="link color-secondary">
+                <div class="link color-secondary" id="logout-link">
                     <img src="/img/icons/log-out.svg" alt="🚪">
                     <h2>Se déconnecter</h2>
                 </div>
