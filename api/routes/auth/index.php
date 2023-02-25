@@ -48,6 +48,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Update session
     Session::update($_AUTH["session"]->getId());
+
+    Response::success(200, "Session updated", [
+        "expires" => $_AUTH["session"]->expires_at->format("Y-m-d H:i:s"),
+    ]);
 } else if ($_SERVER["REQUEST_METHOD"] === "DELETE") {
 
     if ($_AUTH === null)
@@ -55,6 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Delete session
     Session::delete($_AUTH["session"]->getId());
+
+    Response::success(204, "Session deleted");
 } else if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     if ($_AUTH === null)
