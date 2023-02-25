@@ -16,10 +16,10 @@ $routes = [
     "users/:handle" => "users/[handle].php",
     "messages/latest" => "messages/latest.php",
     "messages/:handle" => "messages/[handle].php",
-    "notifications" => "notifications/index.php", // TODO
-    "posts" => "posts/index.php", // TODO
-    "posts/:id" => "posts/[id]/index.php", // TODO
-    "posts/:id/like" => "posts/[id]/like.php", // TODO
+    "notifications" => "notifications/index.php",
+    "posts" => "posts/index.php",
+    "posts/:id" => "posts/[id]/index.php",
+    "posts/:id/like" => "posts/[id]/like.php",
 ];
 
 // Re-route request to correct file

@@ -18,7 +18,7 @@ class Post
         global $MYSQL_POST_TABLE, $MYSQL_LIKE_TABLE;
 
         $this->id = $id;
-        
+
         // Get the likes
         $stmt = Database::$pdo->prepare(
             "SELECT COUNT(*) FROM $MYSQL_LIKE_TABLE
@@ -38,7 +38,7 @@ class Post
 
         $stmt->bindParam(":id", $id);
         $stmt->execute();
-        
+
         $this->comments = $stmt->fetchColumn();
     }
 
@@ -56,7 +56,7 @@ class Post
     private static function get_media_paths(string $media_list_paths): array
     {
         $media_list_count = strlen($media_list_paths) / 20;
-        
+
         $media_paths = [];
         for ($i = 0; $i < $media_list_count; $i++) {
             $media_paths[] = substr($media_list_paths, $i * 20, 20);
@@ -86,6 +86,9 @@ class Post
 
             $row = $stmt->fetch();
 
+            if ($row === false)
+                return 404;
+
             $post = new Post($row["PK_post_id"]);
             $post->reply_to = $row["FK_reply_to"];
             $post->author_handle = $row["FK_author_handle"];
@@ -105,66 +108,83 @@ class Post
      * Get all posts that match the given criteria
      *
      * @param string|null $query The search query (null for no query)
-     * @param array|null $fromUsers The users to get posts from (null for all users)
-     * @param array|null $excludeUsers The users to exclude posts from (null for no users)
-     * @param string|null $replyTo The post ID to get replies to (null for no replies)
+     * @param User[]|null $fromUsers The users to get posts from (null for all users)
+     * @param User[]|null $excludeUsers The users to exclude posts from (null for no users)
+     * @param Post|null $replyTo The post to get replies to (null for no replies)
      * @param boolean|null $hasMedia Whether to get posts with/without media (null for all posts)
      * @param integer $limit The maximum number of posts to get
      * @param integer $offset The offset of the posts to get
-     * @return array The posts
+     * @return Post[]/integer The posts or an error code
      */
     public static function get_all(
         string $query = null,
         array $fromUsers = null,
         array $excludeUsers = null,
-        string $replyTo = null,
+        Post $replyTo = null,
         bool $hasMedia = null,
         int $limit = 25,
         int $offset = 0
-    ): array
-    {
+    ): array|int {
         global $MYSQL_POST_TABLE;
 
         $query = $query ? "%$query%" : null;
-        $fromUsers = $fromUsers ? implode("', '", $fromUsers) : null;
-        $excludeUsers = $excludeUsers ? implode("', '", $excludeUsers) : null;
         $hasMedia = $hasMedia !== null ? ($hasMedia ? "NOT" : "") : null;
 
-        $stmt = Database::$pdo->prepare(
-            "SELECT * FROM $MYSQL_POST_TABLE
-            WHERE (:query IS NULL OR content LIKE :query)
-            AND (:fromUsers IS NULL OR FK_author_handle IN ('$fromUsers'))
-            AND (:excludeUsers IS NULL OR FK_author_handle NOT IN ('$excludeUsers'))
-            AND (:replyTo IS NULL OR FK_reply_to = :replyTo)
-            AND (:hasMedia IS NULL OR media_list_paths $hasMedia LIKE '')
-            ORDER BY created_at DESC
-            LIMIT :limit OFFSET :offset"
-        );
-
-        $stmt->bindParam(":query", $query);
-        $stmt->bindParam(":fromUsers", $fromUsers);
-        $stmt->bindParam(":excludeUsers", $excludeUsers);
-        $stmt->bindParam(":replyTo", $replyTo);
-        $stmt->bindParam(":hasMedia", $hasMedia);
-        $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
-        $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $posts = [];
-        while ($row = $stmt->fetch()) {
-            $post = new Post($row["PK_post_id"]);
-            $post->reply_to = $row["FK_reply_to"];
-            $post->author_handle = $row["FK_author_handle"];
-            $post->tag = $row["tag"];
-            $post->content = $row["content"];
-            $post->views = $row["views_count"];
-            $post->created_at = new DateTime($row["created_at"]);
-            $post->media_paths = self::get_media_paths($row["media_list_paths"]);
-
-            $posts[] = $post;
+        $fromUsersQuery = null;
+        if ($fromUsers !== null) {
+            foreach ($fromUsers as $user) {
+                $fromUsersQuery .= $user->getHandle() . "', '";
+            }
+            $fromUsersQuery = substr($fromUsersQuery, 0, -3);
         }
 
-        return $posts;
+        $excludeUsersQuery = null;
+        if ($excludeUsers !== null) {
+            foreach ($excludeUsers as $user) {
+                $excludeUsersQuery .= $user->getHandle() . "', '";
+            }
+            $excludeUsersQuery = substr($excludeUsersQuery, 0, -3);
+        }
+
+        try {
+            $stmt = Database::$pdo->prepare(
+                "SELECT * FROM $MYSQL_POST_TABLE
+                WHERE (:query IS NULL OR content LIKE :query)
+                AND (:fromUsers IS NULL OR FK_author_handle IN ('$fromUsersQuery'))
+                AND (:excludeUsers IS NULL OR FK_author_handle NOT IN ('$excludeUsersQuery'))
+                AND (:replyTo IS NULL OR FK_reply_to = :replyTo)
+                AND (:hasMedia IS NULL OR media_list_paths $hasMedia LIKE '')
+                ORDER BY created_at DESC
+                LIMIT :limit OFFSET :offset"
+            );
+
+            $stmt->bindParam(":query", $query);
+            $stmt->bindParam(":fromUsers", $fromUsersQuery);
+            $stmt->bindParam(":excludeUsers", $excludeUsersQuery);
+            $stmt->bindParam(":replyTo", $replyTo ? $replyTo->getId() : null);
+            $stmt->bindParam(":hasMedia", $hasMedia);
+            $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
+            $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $posts = [];
+            while ($row = $stmt->fetch()) {
+                $post = new Post($row["PK_post_id"]);
+                $post->reply_to = $row["FK_reply_to"];
+                $post->author_handle = $row["FK_author_handle"];
+                $post->tag = $row["tag"];
+                $post->content = $row["content"];
+                $post->views = $row["views_count"];
+                $post->created_at = new DateTime($row["created_at"]);
+                $post->media_paths = self::get_media_paths($row["media_list_paths"]);
+
+                $posts[] = $post;
+            }
+
+            return $posts;
+        } catch (PDOException $e) {
+            return 500;
+        }
     }
 
     /**
@@ -183,8 +203,7 @@ class Post
         string $content,
         array $media_paths,
         string $reply_to = null
-    ): Post|int
-    {
+    ): Post|int {
         global $MYSQL_POST_TABLE;
 
         $media_list_paths = implode("", $media_paths);
@@ -315,5 +334,4 @@ class Post
             return 500;
         }
     }
-
 }
