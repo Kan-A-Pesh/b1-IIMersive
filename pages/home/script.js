@@ -10,6 +10,7 @@
         loading = true;
 
         const posts = await GET('/posts', {
+            query: queryParams.q || null,
             limit: 25,
             offset: page * 25
         });

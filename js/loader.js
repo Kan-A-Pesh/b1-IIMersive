@@ -1,10 +1,27 @@
 const mainElement = document.querySelector('main');
+let queryPath = null;
+let queryParams = null;
 
 /**
  * Load a app page
  * @param {string} page - Page name
  */
-const loadPage = (page) => {
+const loadPage = (queryString) => {
+
+    queryPath = queryString
+        .split(/(&amp;|\?)/)[0]
+        .split('/');
+
+    queryParams = queryString
+        .split(/(&amp;|\?|&)/)
+        .slice(1)
+        .reduce((acc, param) => {
+            const [key, value] = param.split('=');
+            acc[key] = value;
+            return acc;
+        }, {});
+
+    const page = queryPath[0] || 'home';
 
     // Load page styles (CSS)
     let pageStyle = document.getElementById('page-style');
@@ -50,20 +67,11 @@ const loadPage = (page) => {
     }
 
     // Update URL
-    window.history.pushState({}, page, `/${page}`);
+    // queryString replace the first &amp; by a ? and the others by a &
+    // replace the first only
+    const queryEncoded = queryString.replace(/&amp;/, '?').replace(/&amp;/g, '&');
+    window.history.pushState({}, queryString, `/${queryEncoded}`);
 }
 
 // Load from URL parameter
-const page = queryPath[0] || 'home';
-loadPage(page);
-
-const menuLinks = document.querySelectorAll('.sidebar a');
-
-menuLinks.forEach((link) => {
-    link.addEventListener('click', (event) => {
-        event.preventDefault();
-
-        const page = link.getAttribute('href').substring(1);
-        loadPage(page);
-    });
-});
+loadPage(queryString);

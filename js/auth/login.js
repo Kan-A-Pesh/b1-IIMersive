@@ -47,18 +47,22 @@ const login = async (event) => {
         const response = await POST('/auth', {
             handle: handle,
             password: password,
+            remember_me: rememberMe
         });
 
         const payload = response.payload;
 
+        const expirationDate = parseDate(payload.expires);
+        document.cookie = `session_id=${payload.session_id}; path=/; SameSite=Strict; Secure; expires=${expirationDate.toUTCString()}`;
+
+        localStorage.setItem('remember_me', rememberMe);
+
         if (rememberMe)
         {
-            document.cookie = `session_id=${payload.session_id}; path=/; SameSite=Strict; Secure; expires=${payload.expires}`;
             localStorage.setItem('user_handle', payload.user_handle);
         }
         else 
         {
-            document.cookie = `session_id=${payload.session_id}; path=/; SameSite=Strict; Secure`;
             sessionStorage.setItem('user_handle', payload.user_handle);
         }
 

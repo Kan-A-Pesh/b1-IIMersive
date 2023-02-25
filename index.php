@@ -17,7 +17,6 @@
     <script defer src="/js/navbar/navbar.js"></script>
     <script>
         const queryString = "<?php echo htmlspecialchars($_SERVER['QUERY_STRING']); ?>";
-        const queryPath = queryString.split('/');
     </script>
 </head>
 
@@ -25,8 +24,8 @@
     <nav>
         <h2><span class="color-primary">IIM</span>ersive</h2>
         <div class="input">
-            <input type="text" placeholder="Recherche">
-            <img class="icons" src="/img/icons/search.svg" alt="🔎">
+            <input type="text" placeholder="Recherche" id="search-input">
+            <img class="icons" src="/img/icons/search.svg" alt="🔎" id="search-submit">
         </div>
         <img class="icons menu" src="/img/icons/menu.svg" alt="☰">
     </nav>

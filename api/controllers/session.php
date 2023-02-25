@@ -36,15 +36,20 @@ class Session
      * @param string $user_handle - The user's handle
      * @param string $ip - The user's IP address
      * @param string $user_agent - The user's user agent
+     * @param boolean $remember_me - Whether the session should last longer
      * @return Session|int - The session or an error code
      */
-    public static function create(string $user_handle, string $ip, string $user_agent): Session|int
+    public static function create(string $user_handle, string $ip, string $user_agent, bool $remember_me = false): Session|int
     {
         global $MYSQL_SESSION_TABLE;
 
         // Create session id and expiration date
         $session_id = generate_uuid();
-        $expires_at = new DateTime("+15 minutes");
+        if ($remember_me) {
+            $expires_at = new DateTime("+30 days");
+        } else {
+            $expires_at = new DateTime("+15 minutes");
+        }
         $expires_at_string = $expires_at->format("Y-m-d H:i:s");
 
         // Create session
@@ -81,14 +86,19 @@ class Session
      * Update a session's expiration date (add 15 minutes)
      * 
      * @param string $session_id - The session's id
+     * @param boolean $remember_me - Whether the session should last longer
      * @return ?int - Null if successful, an error code otherwise
      */
-    public static function update(string $session_id): ?int
+    public static function update(string $session_id, bool $remember_me = false): ?int
     {
         global $MYSQL_SESSION_TABLE;
 
         // Create session expiration date
-        $expires_at = new DateTime("+15 minutes");
+        if ($remember_me) {
+            $expires_at = new DateTime("+30 days");
+        } else {
+            $expires_at = new DateTime("+15 minutes");
+        }
         $expires_at_string = $expires_at->format("Y-m-d H:i:s");
 
         // Update session

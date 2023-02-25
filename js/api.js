@@ -4,8 +4,8 @@ const HEADERS = {
 };
 
 const USER_HANDLE =
-    localStorage.getItem('userHandle') ||
-    sessionStorage.getItem('userHandle') ||
+    localStorage.getItem('user_handle') ||
+    sessionStorage.getItem('user_handle') ||
     null;
 
 const parseResponse = async (response) => {
@@ -116,7 +116,14 @@ const parseMedia = (media, defaultMedia) => {
 
 const parseDate = (apiDate) => {
     const {date, timezone_type, timezone} = apiDate;
-    return new Date(date);
+    if (timezone !== 'UTC') throw 'Invalid timezone';
+
+    const localTimezone = new Date().getTimezoneOffset() / -60;
+    const localDate = new Date(date);
+
+    localDate.setHours(localDate.getHours() + localTimezone);
+
+    return localDate;
 };
 
 const toRelativeTime = (date) => {
@@ -150,3 +157,24 @@ const toRelativeTime = (date) => {
 
     return 'longtemps! (oups)';
 }
+
+const checkSession = async () => {
+    if (!document.cookie.includes('session_id'))
+        return;
+
+    try {
+        const remember_me = localStorage.getItem('remember_me') === 'true';
+        const request = await PUT('/auth', {remember_me: remember_me});
+        const expires = request.payload.expires;
+        const date = parseDate(expires);
+        
+        const session_id = document.cookie.split('; ').find(row => row.startsWith('session_id')).split('=')[1];
+        document.cookie = `session_id=${session_id}; expires=${date.toUTCString()}; path=/; SameSite=Strict; Secure`;
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// Check session every minute
+setTimeout(checkSession, 60 * 1000);
