@@ -73,7 +73,7 @@ const register = async () => {
         });
 
         const payload = response.payload;
-        sessionStorage.setItem('user_handle', payload.user_handle);
+        localStorage.setItem('last_user_handle', payload.user_handle);
 
         // TODO: Redirect to /confirm and send email
         window.location.href = '/confirm/null';

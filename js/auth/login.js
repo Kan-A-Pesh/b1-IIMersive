@@ -56,6 +56,7 @@ const login = async (event) => {
         document.cookie = `session_id=${payload.session_id}; path=/; SameSite=Strict; Secure; expires=${expirationDate.toUTCString()}`;
 
         localStorage.setItem('remember_me', rememberMe);
+        localStorage.setItem('last_user_handle', payload.user_handle);
 
         if (rememberMe)
         {
@@ -85,9 +86,10 @@ loginButton.addEventListener('click', login);
 handleInput.addEventListener('input', update);
 passwordInput.addEventListener('input', update);
 
-if (USER_HANDLE !== null)
+const last_user_handle = localStorage.getItem('last_user_handle');
+if (last_user_handle !== null)
 {
-    handleInput.value = USER_HANDLE;
+    handleInput.value = last_user_handle;
     passwordInput.focus();
 }
 else
