@@ -516,6 +516,8 @@ Récupère la liste des posts.
 
 \* `fromUser` ne peut pas contenir d'utilisateurs présents dans `excludeUser`.
 
+\*\* `replyTo` peut avoir la valeur `none` pour récupérer les posts qui ne sont pas des réponses, ou `any` pour récupérer uniquement les posts qui sont des réponses.
+
 #### Réponse
 
 ```json

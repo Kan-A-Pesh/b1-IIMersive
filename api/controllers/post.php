@@ -118,7 +118,7 @@ class Post
         ?string $query = null,
         ?User $fromUsers = null,
         ?User $excludeUsers = null,
-        ?Post $replyTo = null,
+        ?string $replyTo = null,
         ?bool $hasMedia = null,
         int $limit = 25,
         int $offset = 0
@@ -131,7 +131,15 @@ class Post
         $fromUsersQuery = $fromUsers ? $fromUsers->handle : null;
         $excludeUsersQuery = $excludeUsers ? $excludeUsers->handle : null;
 
-        $replyToId = $replyTo ? $replyTo->id : null;
+        if ($replyTo === "none") {
+            $replyToQuery = "AND FK_reply_to IS NULL";
+        } else if ($replyTo === "any") {
+            $replyToQuery = "AND FK_reply_to IS NOT NULL";
+        } else {
+            $replyToQuery = $replyTo ?
+                "AND FK_reply_to = $replyTo" :
+                null;
+        }
 
         try {
             $stmt = Database::$pdo->prepare(
@@ -139,7 +147,7 @@ class Post
                 WHERE (:query IS NULL OR content LIKE :query)
                 AND (:fromUsers IS NULL OR FK_author_handle = :fromUsers)
                 AND (:excludeUsers IS NULL OR FK_author_handle != :excludeUsers)
-                AND (:replyTo IS NULL OR FK_reply_to = :replyTo)
+                $replyToQuery
                 AND (:hasMedia IS NULL OR media_list_paths $hasMedia LIKE '')
                 ORDER BY created_at DESC
                 LIMIT :limit OFFSET :offset"
@@ -148,7 +156,6 @@ class Post
             $stmt->bindParam(":query", $query);
             $stmt->bindParam(":fromUsers", $fromUsersQuery);
             $stmt->bindParam(":excludeUsers", $excludeUsersQuery);
-            $stmt->bindParam(":replyTo", $replyToId);
             $stmt->bindParam(":hasMedia", $hasMedia);
             $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
             $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);

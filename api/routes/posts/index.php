@@ -58,24 +58,29 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         if (!is_string($replyTo))
             Response::error(400, "Invalid replyTo");
 
-        $replyToPost = Post::get($replyTo);
-        if ($replyToPost === 500)
-            Response::error();
-        if ($replyToPost === 404)
-            Response::error(404, "Post not found");
+        if ($replyTo !== "none" && $replyTo !== "any") {
+            $replyToPost = Post::get($replyTo);
+            if ($replyToPost === 500)
+                Response::error();
+            if ($replyToPost === 404)
+                Response::error(404, "Post not found");
+
+            $replyTo = $replyToPost->id;
+        }
     }
 
     // hasMedia
-    if ($hasMedia !== null && !is_bool($hasMedia))
+    if ($hasMedia !== null && $hasMedia !== "true" && $hasMedia !== "false")
         Response::error(400, "Invalid hasMedia");
 
+    $hasMedia = $hasMedia === "true" ? true : null;
 
     // Get posts
     $posts = Post::get_all(
         $query,
         $fromUserObject,
         $excludeUserObject,
-        $replyToPost ?? null,
+        $replyTo,
         $hasMedia,
         $limit,
         $offset
