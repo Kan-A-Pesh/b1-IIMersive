@@ -1,4 +1,31 @@
 (() => {
+
+    // PROFILE HEADER
+    let profile_handle = queryPath[1] || USER_HANDLE || null;
+    
+    if (profile_handle === null) {
+        window.location.href = '/notfound';
+        return;
+    }
+
+    GET('/users/' + profile_handle)
+        .then(async (response) => {
+            const user = response.payload;
+            
+            const avatarImg = document.querySelector('main>section.header>img');
+            const bannerImg = document.querySelector('main>div.banner>img');
+            const biographyText = document.querySelector('main>section.biography>p');
+            const nameText = document.querySelector('main>section.header>h3');
+            const handleText = document.querySelector('main>section.header>p');
+
+            avatarImg.src = parseMedia(user.avatar_path, '/img/defaults/profile_pic.png', urlOnly=true);
+            bannerImg.src = parseMedia(user.banner_path, '/img/defaults/banner.jpg', urlOnly=true);
+            biographyText.innerHTML = parseText(user.biography);
+            nameText.innerText = user.display_name;
+            handleText.innerText = '@' + user.handle;
+        });
+
+    // PROFILE POSTS
     let end = false;
     let loading = false;
     let page = 0;
@@ -31,19 +58,19 @@
 
             if (tab.getAttribute('data-tab') === 'posts') {
                 loadPosts({
-                    fromUser: "Kan_A_Pesh",
+                    fromUser: profile_handle,
                     replyTo: "none"
                 });
                 
             } else if (tab.getAttribute('data-tab') === 'replies') {
                 loadPosts({
-                    fromUser: "Kan_A_Pesh",
+                    fromUser: profile_handle,
                     replyTo: "any"
                 });
 
             } else if (tab.getAttribute('data-tab') === 'media') {
                 loadPosts({
-                    fromUser: "Kan_A_Pesh",
+                    fromUser: profile_handle,
                     hasMedia: true
                 });
 
@@ -56,7 +83,7 @@
     });
 
     loadPosts({
-        fromUser: "Kan_A_Pesh",
+        fromUser: profile_handle,
         replyTo: "none"
     });
 })()

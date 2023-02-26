@@ -38,12 +38,7 @@ const appendPost = (section, post, author, liked) => {
         </div>
         <div class="content">
             <p>${
-                post.content
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;')
-                    .replace(/(https?:\/\/[^\s]+)/g, '<a class="ext" href="$1">$1</a>')
-                    .replace(/@([a-zA-Z0-9_]+)/g, '<a href="/profile/$1">@$1</a>')
-                    .replace(/#([a-zA-Z0-9_]+)/g, '<a href="/home?q=%23$1">#$1</a>')
+                parseText(post.content)
             }</p>
             ${mediaHTML}
         </div>

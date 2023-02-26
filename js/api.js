@@ -91,24 +91,27 @@ const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 const videoExtensions = ['mp4', 'webm', 'ogg'];
 const audioExtensions = ['mp3', 'wav'];
 
-const parseMedia = (media, defaultMedia) => {
+const parseMedia = (media, defaultMedia, urlOnly = false) => {
     if (!media)
         return defaultMedia;
 
     const id = media.substring(0, 16);
     const ext = media.substring(16, 20).trim();
     
-    if (imageExtensions.includes(ext))
+    if (!urlOnly)
     {
-        return `<img src="/media/${id}.${ext}" />`;
-    }
-    else if (videoExtensions.includes(ext))
-    {
-        return `<video src="/media/${id}.${ext}" controls />`;
-    }
-    else if (audioExtensions.includes(ext))
-    {
-        return `<audio src="/media/${id}.${ext}" controls />`;
+        if (imageExtensions.includes(ext))
+        {
+            return `<img src="/media/${id}.${ext}" />`;
+        }
+        else if (videoExtensions.includes(ext))
+        {
+            return `<video src="/media/${id}.${ext}" controls />`;
+        }
+        else if (audioExtensions.includes(ext))
+        {
+            return `<audio src="/media/${id}.${ext}" controls />`;
+        }
     }
 
     return "/media/" + id + "." + ext;
@@ -124,6 +127,16 @@ const parseDate = (apiDate) => {
     localDate.setHours(localDate.getHours() + localTimezone);
 
     return localDate;
+};
+
+const parseText = (text) => {
+    return text
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/(https?:\/\/[^\s]+)/g, '<a class="ext" href="$1">$1</a>')
+        .replace(/@([a-zA-Z0-9_]+)/g, '<a href="/profile/$1">@$1</a>')
+        .replace(/#([a-zA-Z0-9_]+)/g, '<a href="/home?q=%23$1">#$1</a>')
+        .replace(/\n/g, '<br />');
 };
 
 const toRelativeTime = (date) => {
