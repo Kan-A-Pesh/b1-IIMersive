@@ -38,3 +38,22 @@ menuLinks.forEach((link) => {
         loadPage(page);
     });
 });
+
+// Sidebar profile
+if (USER_HANDLE)
+{
+    GET('/users/' + USER_HANDLE)
+        .then(async (response) => {
+            const user = response.payload;
+            
+            const avatarImg = document.querySelector('section.sidebar>div.profile-card>img');
+            const nameText = document.querySelector('section.sidebar>div.profile-card h2');
+
+            avatarImg.src = parseMedia(user.avatar_path, '/img/defaults/profile_pic.png', urlOnly=true);
+            nameText.innerText = user.display_name;
+        });
+}
+else
+{
+    
+}
