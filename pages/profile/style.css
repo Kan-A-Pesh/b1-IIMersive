@@ -40,6 +40,14 @@
     margin-left: 116px;
 }
 
+#main>.header>p {
+    margin-right: auto;
+}
+
+#main>.header>a>button {
+    padding: 6px 24px;
+}
+
 #main>.biography {
     padding: 16px var(--padding-value);
 }

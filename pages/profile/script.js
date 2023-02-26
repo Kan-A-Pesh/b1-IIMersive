@@ -8,6 +8,16 @@
         return;
     }
 
+    const editButton = document.querySelector('main>section.header>a');
+    if (profile_handle === USER_HANDLE) {
+        editButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            loadPage('editprofile');
+        });
+    }
+    else
+        editButton.remove();
+
     GET('/users/' + profile_handle)
         .then(async (response) => {
             const user = response.payload;
