@@ -8,7 +8,7 @@ const appendPost = (section, post, author, liked) => {
     }
 
     let trashButton = '';
-    if (author.id == USER_HANDLE) {
+    if (author.handle == USER_HANDLE) {
         trashButton = `
             <div class="delete color-secondary">
                 <img src="/img/icons/trash.svg" alt="🗑️">
@@ -26,7 +26,7 @@ const appendPost = (section, post, author, liked) => {
                 <a href="/profile/${author.handle}">
                     <div class="names">
                         <h3 class="opacity-9">${author.display_name}</h3>
-                        <p class="opacity-5">@${author.handle} • ${toRelativeTime(post.created_at)}</p>
+                        <p class="opacity-5">@${author.handle} • ${toRelativeTime(parseDate(post.created_at))}</p>
                     </div>
                 </a>
                 <div class="tag-buttons">
