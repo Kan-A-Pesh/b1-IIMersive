@@ -28,7 +28,7 @@ document
     });
 
 // Sidebar links
-const menuLinks = document.querySelectorAll('.sidebar a');
+const menuLinks = document.querySelectorAll('.sidebar a:not(.ext)');
 
 menuLinks.forEach((link) => {
     link.addEventListener('click', (event) => {
@@ -42,6 +42,10 @@ menuLinks.forEach((link) => {
 // Sidebar profile
 if (USER_HANDLE)
 {
+    document.querySelectorAll('section.sidebar .log-hidden').forEach((element) => {
+        element.style.display = 'none';
+    });
+
     GET('/users/' + USER_HANDLE)
         .then(async (response) => {
             const user = response.payload;
@@ -55,5 +59,7 @@ if (USER_HANDLE)
 }
 else
 {
-    
+    document.querySelectorAll('section.sidebar .anon-hidden').forEach((element) => {
+        element.style.display = 'none';
+    });
 }

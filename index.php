@@ -34,32 +34,48 @@
 
     <div id="app">
         <section class="sidebar">
-            <div class="profile-card">
+            <div class="profile-card anon-hidden">
                 <img src="/img/defaults/profile_pic.png" alt="Profile picture">
                 <div class="profile-info">
                     <h2>Profile-Name</h2>
                     <a href="/profile">
                         <button class="bg-primary">
-                            <h3>Voir mon profil</h3>
+                            <h3>Mon profil</h3>
                         </button>
                     </a>
                 </div>
             </div>
 
+            <div class="login-card log-hidden">
+                <p>Connectez-vous dès maintenant pour profiter de toutes les fonctionnalités de IIMersive !</p>
+            </div>
+
             <div class="links">
+                <a href="/login" class="log-hidden ext">
+                    <div class="link">
+                        <img class="icons" src="/img/icons/log-in.svg" alt="🏠">
+                        <h2>Se connecter</h2>
+                    </div>
+                </a>
+                <a href="/register" class="log-hidden ext">
+                    <div class="link">
+                        <img class="icons" src="/img/icons/star.svg" alt="🏠">
+                        <h2>S'inscrire</h2>
+                    </div>
+                </a>
                 <a href="/home">
                     <div class="link">
                         <img class="icons" src="/img/icons/home.svg" alt="🏠">
                         <h2>Accueil</h2>
                     </div>
                 </a>
-                <a href="/notifications">
+                <a href="/notifications" class="anon-hidden">
                     <div class="link">
                         <img class="icons" src="/img/icons/bell.svg" alt="🔔">
                         <h2>Notifications</h2>
                     </div>
                 </a>
-                <a href="/messages">
+                <a href="/messages" class="anon-hidden">
                     <div class="link">
                         <img class="icons" src="/img/icons/message-circle.svg" alt="💬">
                         <h2>Messages</h2>
@@ -71,7 +87,7 @@
                         <h2>Paramètres</h2>
                     </div>
                 </a>
-                <div class="link color-secondary" id="logout-link">
+                <div class="link color-secondary anon-hidden" id="logout-link">
                     <img src="/img/icons/log-out.svg" alt="🚪">
                     <h2>Se déconnecter</h2>
                 </div>
