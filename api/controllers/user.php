@@ -296,6 +296,7 @@ class User
             // Return
             return null;
         } catch (PDOException $e) {
+            echo $e->getMessage();
             return 500;
         }
     }

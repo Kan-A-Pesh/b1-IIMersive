@@ -36,6 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         $handle,
         $_POST["name"] ?? null,
         $_POST["email"] ?? null,
+        null, // TODO: $_POST["password"] ?? null,
         $_POST["biography"] ?? null,
         null, // TODO: $_POST["avatar"] ?? null,
         null  // TODO: $_POST["banner"] ?? null

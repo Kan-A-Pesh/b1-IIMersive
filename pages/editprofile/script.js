@@ -1,4 +1,10 @@
 (() => {
+
+    if (USER_HANDLE === null) {
+        window.location.href = '/login';
+        return;
+    }
+
     // Get elements
     const profileImg = document.querySelector("#profile-img");
     const profileUpload = document.querySelector("#profile-upload");
@@ -21,28 +27,28 @@
     };
 
     modalSave.addEventListener("click", () => {
+
         // Save changes
-        fetch("/api/user/:handle", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username: usernameInput.value,
-                bio: bioInput.value,
-                avatar: profileImg.src,
-                banner: bannerImg.src
-            }),
+        PUT("/users/" + USER_HANDLE, {
+            name: usernameInput.value,
+            biography: bioInput.value,
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
+            .then(_ => {
+                // Redirect to profile page
+                window.location.href = `/profile/${USER_HANDLE}`;
+            })
+            .catch(error => {
+                if (error.code === 409) {
+                    alert("Username already taken");
                     return;
                 }
 
-                // Redirect to profile page
-                window.location.href = `/user/${data.handle}`;
+                if (error.code === 429) {
+                    alert("Too many requests! Calm down!");
+                    return;
+                }
+
+                alert("Something went wrong (code: " + error.code + ")");
             });
     });
 
@@ -131,19 +137,13 @@
 
 
     // Load profile data
-    fetch("/api/user/:handle")
-        .then(response => response.json())
-        .then(data => {
-
-            if (data.error) {
-                alert(data.error);
-                return;
-            }
-
-            // Set profile data
-            profileImg.src = data.avatar;
-            bannerImg.src = data.banner;
-            usernameInput.value = data.username;
-            bioInput.value = data.bio;
+    GET('/users/' + USER_HANDLE)
+        .then(async (response) => {
+            const user = response.payload;
+            
+            profileImg.src = parseMedia(user.avatar, '/img/defaults/profile_pic.png', urlOnly=true);
+            bannerImg.src = parseMedia(user.banner, '/img/defaults/banner.jpg', urlOnly=true);
+            usernameInput.value = user.display_name;
+            bioInput.value = user.biography;
         });
 })();
