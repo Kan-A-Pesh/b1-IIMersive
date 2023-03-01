@@ -18,6 +18,12 @@ Pour plus d'informations sur l'avancement du projet, vous pouvez consulter le [T
 
 Le projet nécessite un serveur web Apache, PHP et MySQL.
 
+Il est possible d'installer le projet avec Docker, ce qui permet de ne pas avoir à installer et à configurer un serveur Apache et PHP.\
+
+Cependant, il est nécessaire de configurer un serveur de base de données MySQL manuellement.\
+Pour cela, il vous suffit de créer une base de données, puis d'exécuter le script SQL `api/iimersive.sql`.\
+Puis, il vous suffit de renseigner les informations de connexion à la base de données dans le fichier `api/config.php`.
+
 ### 🐋 Docker
 
 Vous pouvez utiliser Docker pour installer le projet.\
@@ -35,15 +41,16 @@ Vous pouvez ensuite accéder au projet à l'adresse `http://localhost:5555/`.
 Pour stopper et supprimer le conteneur, vous pouvez utiliser les commandes suivantes :
 
 ```bash
+# Arrêt du conteneur
 docker stop iimersive
 ```
 
 ### 📦 Manuel
 
 Vous pouvez également installer le projet manuellement.\
-Pour cela, il est nécessaire d'installer un serveur web Apache et PHP et de configurer la base de données MySQL manuellement.
+Pour cela, il est nécessaire d'installer un serveur web Apache et PHP.\
 
-Les informations de connexion à la base de données sont à renseigner dans le fichier `api/config.php`.
+Vous devez ensuite cloner le projet dans le dossier de votre serveur web.
 
 ## 📜 Documentation
 
