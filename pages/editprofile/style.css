@@ -5,7 +5,8 @@
     padding: 16px;
     gap: 16px;
 
-    align-items: center;
+    align-items: stretch;
+    overflow-y: auto;
     flex: 1 1 0;
 }
 
@@ -16,6 +17,7 @@
     padding: 16px;
     min-width: 45%;
     max-width: 60%;
+    margin: 0 20%;
 }
 
 #main>section img {
@@ -36,6 +38,7 @@
     #main>section {
         max-width: 100%;
         min-width: 95%;
+        margin: 0;
     }
 
     #main>section img {

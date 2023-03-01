@@ -144,6 +144,7 @@
             profileImg.src = parseMedia(user.avatar, '/img/defaults/profile_pic.png', urlOnly=true);
             bannerImg.src = parseMedia(user.banner, '/img/defaults/banner.jpg', urlOnly=true);
             usernameInput.value = user.display_name;
+            usernameInput.placeholder = user.display_name;
             bioInput.value = user.biography;
         });
 })();

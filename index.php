@@ -35,9 +35,9 @@
     <div id="app">
         <section class="sidebar">
             <div class="profile-card anon-hidden">
-                <img src="/img/defaults/profile_pic.png" alt="Profile picture">
+                <img src="/img/placeholders/loading.gif" alt="Profile picture">
                 <div class="profile-info">
-                    <h2>Profile-Name</h2>
+                    <h2><span class="opacity-3">Chargement...</span></h2>
                     <a href="/profile">
                         <button class="bg-primary">
                             <h3>Mon profil</h3>
