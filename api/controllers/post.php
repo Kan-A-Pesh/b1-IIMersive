@@ -103,7 +103,7 @@ class Post
     }
 
     /**
-     * Get all posts that match the given criteria
+     * Get all posts that match the given criteria (and add a view to each post)
      *
      * @param ?string $query The search query (null for no query)
      * @param ?User $fromUsers The user to get posts from (null for all users)
@@ -173,6 +173,17 @@ class Post
                 $post->media_paths = self::get_media_paths($row["media_list_paths"]);
 
                 $posts[] = $post;
+            }
+
+            if (count($posts) > 0) {
+                // Add views to posts
+                $stmt = Database::$pdo->prepare(
+                    "UPDATE $MYSQL_POST_TABLE
+                    SET views_count = views_count + 1
+                    WHERE PK_post_id IN (" . implode(",", array_map(fn ($post) => "'$post->id'", $posts)) . ")"
+                );
+
+                $stmt->execute();
             }
 
             return $posts;
