@@ -20,13 +20,21 @@ const appendPost = (section, post, author, liked) => {
         });
     }
 
-    let trashButton = '';
+    let trashButtonHTML = '';
     if (author.handle == USER_HANDLE) {
-        trashButton = `
+        trashButtonHTML = `
             <div class="delete color-secondary">
                 <img src="/img/icons/trash.svg" alt="🗑️">
             </div>
         `;
+    }
+
+    let likeButtonHTML = '';
+    if (liked != null) {
+        likeButtonHTML = `<div class="likes ${liked ? 'unlike' : 'like'}">
+            <img class="icons" src="/img/icons/heart${liked ? '-filled' : ''}.svg" alt="🤍">
+            <p>${post.likes}</p>
+        </div>`;
     }
 
     const article = document.createElement('article');
@@ -56,10 +64,7 @@ const appendPost = (section, post, author, liked) => {
             ${mediaHTML}
         </div>
         <div class="footer">
-            <div class="likes ${liked ? 'unlike' : 'like'}">
-                <img class="icons" src="/img/icons/heart${liked ? '-filled' : ''}.svg" alt="🤍">
-                <p>${post.likes}</p>
-            </div>
+            ${likeButtonHTML}
             <div class="comments">
                 <img class="icons" src="/img/icons/message-square.svg" alt="💬">
                 <p>${post.comments}</p>
@@ -68,7 +73,7 @@ const appendPost = (section, post, author, liked) => {
                 <img class="icons" src="/img/icons/eye.svg" alt="👁️">
                 <p>${post.views}</p>
             </div>
-            ${trashButton}
+            ${trashButtonHTML}
         </div>
     `;
 
@@ -78,24 +83,26 @@ const appendPost = (section, post, author, liked) => {
         loadPage(`profile/${author.handle}`);
     });
 
-    const likeButton = article.querySelector('.likes');
-    likeButton.addEventListener('click', async () => {
-        const likeText = likeButton.querySelector('p');
+    if (liked != null) {
+        const likeButton = article.querySelector('.likes');
+        likeButton.addEventListener('click', async () => {
+            const likeText = likeButton.querySelector('p');
 
-        if (likeButton.classList.contains('like')) {
-            await POST(`/posts/${post.id}/like`);
-            likeButton.classList.remove('like');
-            likeButton.classList.add('unlike');
-            likeButton.querySelector('img').src = '/img/icons/heart-filled.svg';
-            likeText.textContent = parseInt(likeText.textContent) + 1;
-        } else {
-            await DELETE(`/posts/${post.id}/like`);
-            likeButton.classList.remove('unlike');
-            likeButton.classList.add('like');
-            likeButton.querySelector('img').src = '/img/icons/heart.svg';
-            likeText.textContent = parseInt(likeText.textContent) - 1;
-        }
-    });
+            if (likeButton.classList.contains('like')) {
+                await POST(`/posts/${post.id}/like`);
+                likeButton.classList.remove('like');
+                likeButton.classList.add('unlike');
+                likeButton.querySelector('img').src = '/img/icons/heart-filled.svg';
+                likeText.textContent = parseInt(likeText.textContent) + 1;
+            } else {
+                await DELETE(`/posts/${post.id}/like`);
+                likeButton.classList.remove('unlike');
+                likeButton.classList.add('like');
+                likeButton.querySelector('img').src = '/img/icons/heart.svg';
+                likeText.textContent = parseInt(likeText.textContent) - 1;
+            }
+        });
+    }
 
     const commentButton = article.querySelector('.comments');
     commentButton.addEventListener('click', () => {
@@ -119,11 +126,11 @@ const fetchPostMetadata = async (post) => {
 
     const [authorRequest, likedRequest] = await Promise.all([
         GET(`/users/${post.author_handle}`),
-        GET(`/posts/${post.id}/like`)
+        USER_HANDLE != null ? GET(`/posts/${post.id}/like`) : null
     ]);
     
-    const author = authorRequest.payload;
-    const liked = likedRequest.payload;
+    const author = authorRequest?.payload ?? null;
+    const liked = likedRequest?.payload ?? null;
 
     return [author, liked];
 }
