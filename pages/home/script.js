@@ -209,24 +209,13 @@
 
     modalSubmit.addEventListener('click', () => {
         // Submit post
-        fetch('/api/post', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(modalSelected)
-        }).then((response) => {
-            return response.json();
-        }).then((data) => {
-            if (data.success) {
-                // Clear modal draft
-                localStorage.removeItem('modalDraft');
-
-                // Go to post page
-                window.location.href = '/post/' + data.postId;
-            } else {
-                alert("Error: " + data.error);
-            }
-        });
+        POST('/posts', {
+            tag: modalSelected.tag,
+            content: modalSelected.text,
+            // TODO: Add images
+        })
+            .then(response => {
+                loadPage("posts/" + response.payload.id);
+            });
     });
 })();

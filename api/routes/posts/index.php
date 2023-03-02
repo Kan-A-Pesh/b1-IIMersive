@@ -98,14 +98,16 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         Response::error(401, "User not authenticated");
 
     // Get arguments
-    $tag = $_POST["tag"] ?? null;
-    $content = $_POST["content"] ?? null;
-    $replyTo = $_POST["replyTo"] ?? null;
+    $tag = isset($_POST["tag"]) ? $_POST["tag"] : null;
+    $content = isset($_POST["content"]) ? $_POST["content"] : null;
+    $replyTo = isset($_POST["replyTo"]) ? $_POST["replyTo"] : null;
 
-    $countfiles = count($_FILES['files']['name']);
     $media = null;
-    if ($countfiles > 0) {
-        $media = $_FILES['files'];
+    if (isset($_FILES['files'])) {
+        $countfiles = count($_FILES['files']['name']);
+        if ($countfiles > 0) {
+            $media = $_FILES['files'];
+        }
     }
 
     // Check arguments
@@ -190,7 +192,13 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 
     // Create post
-    $post = Post::create($_AUTH["user"], $tag, $content, $mediaPaths, $replyToPost ?? null);
+    $post = Post::create(
+        $_AUTH["user"]->handle,
+        $tag,
+        $content,
+        $mediaPaths,
+        $replyToPost ?? null
+    );
 
     if ($post === 500)
         Response::error();

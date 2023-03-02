@@ -211,15 +211,17 @@ class Post
     ): Post|int {
         global $MYSQL_POST_TABLE;
 
+        $post_id = generate_uuid();
         $media_list_paths = implode("", $media_paths);
 
         try {
             $stmt = Database::$pdo->prepare(
                 "INSERT INTO $MYSQL_POST_TABLE
-                (FK_author_handle, tag, content, media_list_paths, FK_reply_to)
-                VALUES (:author_handle, :tag, :content, :media_list_paths, :reply_to)"
+                (PK_post_id, FK_author_handle, tag, content, media_list_paths, FK_reply_to)
+                VALUES (:post_id, :author_handle, :tag, :content, :media_list_paths, :reply_to)"
             );
 
+            $stmt->bindParam(":post_id", $post_id);
             $stmt->bindParam(":author_handle", $author_handle);
             $stmt->bindParam(":tag", $tag);
             $stmt->bindParam(":content", $content);
