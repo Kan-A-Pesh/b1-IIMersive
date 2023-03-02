@@ -16,26 +16,24 @@
     };
 
     // Fetch notifications
-    fetch('/api/notifications')
-        .then(response => response.json())
-        .then(data => {
-
-            if (data.error) {
-                alert(data.error);
+    GET('/notifications')
+        .then(response => {
+            if (response.payload.length === 0)
+            {
+                main.innerHTML = `<p class="end-message">Vous n'avez aucune notification.</p>`;
                 return;
             }
 
-            // Create notifications
-            data.forEach(notification => {
+            main.innerHTML = '';
+            response.payload.forEach(notificationData => {
+                
+                const notification = {
+                    image: parseMedia(notificationData.image, '/img/defaults/profile_pic.png', urlOnly=true),
+                    content: parseText(notificationData.content),
+                };
+
                 appendNotification(notification);
             });
         });
-
-    // Test
-    // TODO: Remove this when backend is done
-    appendNotification({
-        image: 'img/defaults/profile_pic.png',
-        content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl. Donec auctor, nisl eget ultricies lacinia, nisl nisl aliquet nisl, eget aliquet nunc nisl eget nisl.'
-    });
 
 })();
