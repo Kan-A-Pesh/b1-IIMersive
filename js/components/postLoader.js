@@ -1,3 +1,16 @@
+const tags = [
+    "Informatique",
+    "Téléphonie",
+    "Électronique",
+    "Jeux vidéo",
+    "Réalité virtuelle",
+    "Intelligence artificielle",
+    "Domotique",
+    "Objets connectés",
+    "Technologie",
+    "Innovation"
+]
+
 const appendPost = (section, post, author, liked) => {
 
     let mediaHTML = '';
@@ -31,7 +44,7 @@ const appendPost = (section, post, author, liked) => {
                 </a>
                 <div class="tag-buttons">
                     <button style="--id: ${post.tag}">
-                        <p>Informatique</p>
+                        <p>${tags[post.tag]}</p>
                     </button>
                 </div>
             </div>

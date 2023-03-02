@@ -3,6 +3,7 @@
     gap: 8px;
     overflow-x: auto;
     overflow-y: hidden;
+    align-items: flex-start;
 }
 
 .tag-buttons>button.reset {

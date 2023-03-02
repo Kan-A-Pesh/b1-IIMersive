@@ -1,7 +1,7 @@
 #main {
     display: inline-block;
 
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden;
 
     position: relative;
@@ -36,10 +36,13 @@ hr {
 /* Main feed section */
 .posts {
     min-width: 1px;
+    height: 100%;
+    overflow-y: auto;
 }
 
 .posts>.tag-buttons {
-    padding-bottom: 8px;
+    min-height: 50px;
+    min-width: 1px;
 }
 
 /* Add post button */
