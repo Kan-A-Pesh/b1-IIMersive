@@ -118,10 +118,3 @@ button {
 ::-webkit-scrollbar-thumb {
     background: var(--background-primary);
 }
-
-.end-message {
-    padding: 16px;
-    text-align: center;
-    font-size: 24px;
-    opacity: 0.15;
-}

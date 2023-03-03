@@ -1,6 +1,9 @@
 @import url("./cards/user-card.css");
 @import url("./cards/post-card.css");
 
+@import url("./ends/end-message.css");
+@import url("./ends/end-post.css");
+
 @import url("./inputs/textarea-input.css");
 @import url("./inputs/text-input.css");
 @import url("./inputs/submit-input.css");

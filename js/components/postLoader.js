@@ -165,6 +165,23 @@ const fetchPosts = async (container, page, additionnalParams = {}) => {
         appendPost(container, post, author, liked);
     });
 
+    if (USER_HANDLE == null) {
+        end = true;
+
+        const endPost = document.createElement('div');
+        endPost.classList.add('card', 'feed-post', 'end-post');
+
+        endPost.innerHTML = `
+            <p>Vous voulez voir plus de posts ?</p>
+            <a href="/register">
+                <button class="bg-primary">Inscrivez-vous !</button>
+            </a>
+        `;
+
+        container.appendChild(endPost);
+        return end;
+    }
+
     if (posts.payload.length < 25) {
         end = true;
 
