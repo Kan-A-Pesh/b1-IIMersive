@@ -9,7 +9,10 @@ const USER_HANDLE =
     null;
 
 const parseResponse = async (response) => {
-    if (response.status === 401) {
+
+    if (response.status === 401 &&
+        !window.location.href.includes('/login') &&
+        !window.location.href.includes('/register')) {
         localStorage.removeItem("user_handle");
         sessionStorage.removeItem("user_handle");
         document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
