@@ -25,6 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if ($post->author_handle !== $_AUTH["user"]->handle)
         Response::error(403, "User is not post owner");
 
+    // Delete media
+    if ($post->media_paths !== null) {
+        foreach ($post->media_paths as $media_path) {
+            $snowflake = MediaSnowflake::parse($media_path);
+            Media::delete($snowflake->toFile());
+        }
+    }
+
     // Delete post
     $result = Post::delete($post->id);
 

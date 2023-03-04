@@ -196,3 +196,10 @@ const checkSession = async () => {
 
 // Check session every minute
 setTimeout(checkSession, 60 * 1000);
+
+const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});

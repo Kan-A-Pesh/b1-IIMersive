@@ -102,11 +102,11 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     $content = isset($_POST["content"]) ? $_POST["content"] : null;
     $replyTo = isset($_POST["replyTo"]) ? $_POST["replyTo"] : null;
 
-    $media = null;
-    if (isset($_FILES['files'])) {
-        $countfiles = count($_FILES['files']['name']);
-        if ($countfiles > 0) {
-            $media = $_FILES['files'];
+    $medias = null;
+    if (isset($_POST['medias'])) {
+        $medias = [];
+        foreach ($_POST['medias'] as $mediaData) {
+            $medias[] = new Media($mediaData["data"], $mediaData["ext"]);
         }
     }
 
@@ -135,34 +135,20 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     }
 
     // media
-    if ($media !== null) {
-        if (!is_array($media))
+    if ($medias !== null) {
+        if (!is_array($medias))
             Response::error(400, "Invalid media");
 
-        if ($countfiles > 4)
+        if (count($medias) > 4)
             Response::error(400, "Too many files");
 
-        foreach ($media["name"] as $key => $name) {
-            if (!is_string($name))
-                Response::error(400, "Invalid media name");
-            if (!is_string($media["type"][$key]))
-                Response::error(400, "Invalid media type");
-            if (!is_string($media["tmp_name"][$key]))
-                Response::error(400, "Invalid media tmp_name");
-            if (!is_numeric($media["size"][$key]))
-                Response::error(400, "Invalid media size");
-            if (!is_numeric($media["error"][$key]))
-                Response::error(400, "Invalid media error");
-
-            if ($media["size"][$key] > 2000000) // 2MB
+        foreach ($medias as $media) {
+            // Check file size
+            if (strlen($media->base64data) > 8000000) // 10MB
                 Response::error(400, "File too large");
 
-            $fileType = explode("/", $media["type"][$key]);
-            if ($fileType[0] !== "image" && $fileType[0] !== "video" && $fileType[0] !== "audio")
-                Response::error(400, "Invalid media type");
-
             $validExtensions = ["png", "jpg", "jpeg", "gif", "mp4", "webm", "ogg", "mp3", "wav"];
-            if (!in_array($fileType[1], $validExtensions))
+            if (!in_array($media->extension, $validExtensions))
                 Response::error(400, "Invalid media extension");
         }
     }
@@ -170,19 +156,15 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     // Upload media
     $mediaPaths = [];
     if ($media !== null) {
-        foreach ($media["name"] as $key => $name) {
-            $fileType = explode("/", $media["type"][$key]);
-            $fileExtension = $fileType[1];
-
+        foreach ($medias as $media) {
             // Generate snowflake
-            $fileSnowflake = MediaSnowflake::generate($fileExtension);
+            $fileSnowflake = MediaSnowflake::generate($media->extension);
 
             // Upload file
-            if (!move_uploaded_file($media["tmp_name"][$key], $$fileSnowflake->toFile()))
-                Response::error(500, "Failed to upload media");
+            $filePath = $fileSnowflake->toFile();
+            $media->save($filePath);
 
             // Clean up
-            chmod($filePath, 0644);
             // TODO: Remove metadata
             // TODO: Resize image (if needed)
             // TODO: Compress file

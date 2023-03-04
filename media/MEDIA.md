@@ -33,3 +33,15 @@ les 16 premiers étant l'identifiant de la ressource, et les 4 derniers étant l
 *Exemple:* `87fdd8aa3aeafd7c png` (identifiant: `87fdd8aa3aeafd7c`, extension: `.png`).
 
 La ressource est ensuite disponible à l'adresse `/media/87fdd8aa3aeafd7c.png`.
+
+## Upload de ressources
+
+Les ressources sont envoyées au serveur avec les différents endpoints nécessitant une ressource, elles sont alors uploadées en Base64 dans le corps de la requête.
+
+*Exemple d'upload d'une image en Base64*:
+
+```json
+{
+    "image": "data:image/png;base64,iVBORw0KGgo..."
+}
+```

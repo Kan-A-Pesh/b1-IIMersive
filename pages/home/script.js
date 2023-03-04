@@ -92,7 +92,7 @@
     let modalSelected = {
         text: '',
         tag: 0,
-        images: []
+        medias: []
     };
 
     // Tag buttons
@@ -115,33 +115,53 @@
     });
 
     // Image upload
-    const modalImageContainer = document.querySelector('div.modal .image-upload');
-    const modalImageInput = document.querySelector('div.modal .image-upload button.add-image');
+    const modalMediaContainer = document.querySelector('div.modal .image-upload');
+    const modalMediaInput = document.querySelector('div.modal .image-upload button.add-image');
 
-    const appendImageButton = (imageData) => {
-        const imageButton = document.createElement('button');
-        const imageImg = document.createElement('img');
-        imageImg.src = imageData;
-        imageButton.appendChild(imageImg);
-        modalImageContainer.insertBefore(imageButton, modalImageContainer.firstChild);
+    const appendMediaButton = (ext, data) => {
+        const mediaButton = document.createElement('button');
+
+        let mediaContent = "";
+
+        if (imageExtensions.includes(ext))
+        {
+            mediaContent = `<img src="${data}" />`;
+        }
+        else if (videoExtensions.includes(ext))
+        {
+            mediaContent = `<video src="${data}" autoplay muted loop />`;
+        }
+        else if (audioExtensions.includes(ext))
+        {
+            mediaContent = `<audio src="/${data}" controls />`;
+        }
+
+        mediaButton.innerHTML = mediaContent;
+        modalMediaContainer.insertBefore(mediaButton, modalMediaContainer.firstChild);
 
         // Remove image from modal on click
-        imageButton.addEventListener('click', () => {
-            modalImageContainer.removeChild(imageButton);
-            modalSelected.images = modalSelected.images.filter((item) => {
-                return item != imageData;
+        mediaButton.addEventListener('click', () => {
+            modalMediaContainer.removeChild(mediaButton);
+            modalSelected.medias = modalSelected.medias.filter((item) => {
+                return item != {
+                    ext: ext,
+                    data: data
+                };
             });
 
             saveModal();
         });
     };
 
-    modalImageInput.addEventListener('click', () => {
+    modalMediaInput.addEventListener('click', () => {
 
         // Create a file picker input and click it
         const filePicker = document.createElement('input');
         filePicker.type = 'file';
-        filePicker.accept = 'image/*';
+        filePicker.accept =
+            'image/jpg, image/jpeg, image/png, image/gif, '+
+            'video/mp4, video/webm, video/ogg, '+
+            'audio/mp3, audio/wav';
 
         filePicker.addEventListener('change', () => {
 
@@ -151,28 +171,35 @@
             if (!file) {
                 return;
             }
-            // Check if file is an image
-            if (!file.type.startsWith('image/')) {
+
+            // Prevent too many medias (max 4)
+            if (modalSelected.medias.length >= 4) {
+                alert('Too many medias (max 4)');
                 return;
             }
 
-            // Prevent too many images (max 4)
-            if (modalSelected.images.length >= 4) {
-                return;
-            }
+            // Convert to base64
+            toBase64(file)
+                .then((data) => {
+                    // Check file length
+                    if (data.length > 8000000) {
+                        alert('File too large (max 8MB)');
+                        return;
+                    }
 
-            const reader = new FileReader();
-            reader.addEventListener('load', () => {
+                    const ext = file.name.split('.').pop();
 
-                // Add image to modal
-                appendImageButton(reader.result);
+                    // Add medias to modal
+                    appendMediaButton(ext, data);
 
-                // Add image to list of selected images and save modal
-                modalSelected.images.push(reader.result);
-                saveModal();
-            });
+                    // Add image to list of selected medias and save modal
+                    modalSelected.medias.push({
+                        ext: ext,
+                        data: data
+                    });
 
-            reader.readAsDataURL(file);
+                    saveModal();
+                });
         });
 
         filePicker.click();
@@ -180,26 +207,24 @@
 
     /* Local storage */
     const loadModal = () => {
+
         const modalDraft = localStorage.getItem('modalDraft');
 
         if (modalDraft) {
-            modalSelected = JSON.parse(modalDraft);
-
-            // Text
+            modalSelected = {
+                medias: [],
+                ...JSON.parse(modalDraft)
+            };
             modalTextInput.value = modalSelected.text;
-
-            // Tag
             activateButton(modalTagButtons, modalSelected.tag);
-
-            // Images
-            for (let i = 0; i < modalSelected.images.length; i++) {
-                appendImageButton(modalSelected.images[i]);
-            }
         }
     }
 
     const saveModal = () => {
-        localStorage.setItem('modalDraft', JSON.stringify(modalSelected));
+        localStorage.setItem('modalDraft', JSON.stringify({
+            text: modalSelected.text,
+            tag: modalSelected.tag
+        }));
     }
 
     loadModal();
@@ -208,13 +233,14 @@
     const modalSubmit = document.querySelector('div.modal .modal-buttons>button');
 
     modalSubmit.addEventListener('click', () => {
-        // Submit post
+        // Submit post (wait a response before sending images)
         POST('/posts', {
             tag: modalSelected.tag,
             content: modalSelected.text,
-            // TODO: Add images
+            medias: modalSelected.medias
         })
             .then(response => {
+                localStorage.removeItem('modalDraft');
                 loadPage("posts/" + response.payload.id);
             });
     });

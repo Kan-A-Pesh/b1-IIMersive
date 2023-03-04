@@ -26,7 +26,9 @@
     border-radius: 4px;
 }
 
-.feed-post>.content img {
+.feed-post>.content img,
+.feed-post>.content video,
+.feed-post>.content audio {
     max-width: min(100%, 500px);
     max-height: 350px;
     border-radius: 16px;

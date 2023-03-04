@@ -1,1 +1,5 @@
+# Config files
 api/config.php
+
+# Medias
+media/*(.png|.jpg|.jpeg|.gif|.mp4|.webm|.ogg|.mp3|.wav)
