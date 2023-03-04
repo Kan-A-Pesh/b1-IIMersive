@@ -26,12 +26,20 @@
     border-radius: 4px;
 }
 
-.feed-post>.content img,
-.feed-post>.content video,
-.feed-post>.content audio {
+.feed-post>.content img:nth-child(2),
+.feed-post>.content video:nth-child(2),
+.feed-post>.content audio:nth-child(2) {
     max-width: min(100%, 500px);
     max-height: 350px;
     border-radius: 16px;
+    display: block;
+}
+
+.feed-post>.content img:nth-child(n+3) {
+    margin-top: 8px;
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 8px;
 }
 
 .feed-post>.content>* {
