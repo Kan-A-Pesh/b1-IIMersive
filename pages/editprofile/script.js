@@ -32,6 +32,14 @@
         PUT("/users/" + USER_HANDLE, {
             name: usernameInput.value,
             biography: bioInput.value,
+            avatar: profileImg.src.includes("data:image") ? {
+                extension: profileImg.src.split(";base64,")[0].split("/").pop(),
+                data: profileImg.src
+            } : null,
+            banner: bannerImg.src.includes("data:image") ? {
+                extension: bannerImg.src.split(";base64,")[0].split("/").pop(),
+                data: bannerImg.src
+            } : null
         })
             .then(_ => {
                 // Redirect to profile page
@@ -69,14 +77,20 @@
             const file = fileInput.files[0];
 
             // Apply file to image
-            const reader = new FileReader();
-            reader.onload = () => {
-                profileImg.src = reader.result;
-            };
-            reader.readAsDataURL(file);
+            toBase64(file)
+                .then((data) => {
+                    // Check file length
+                    if (data.length > 8000000) {
+                        alert('File too large (max 8MB)');
+                        return;
+                    }
 
-            // Show modal
-            showModal();
+                    // Update image
+                    profileImg.src = data;
+                    
+                    // Show modal
+                    showModal();
+                });
         });
 
         fileInput.click();
@@ -103,14 +117,20 @@
             const file = fileInput.files[0];
 
             // Apply file to image
-            const reader = new FileReader();
-            reader.onload = () => {
-                bannerImg.src = reader.result;
-            };
-            reader.readAsDataURL(file);
+            toBase64(file)
+                .then((data) => {
+                    // Check file length
+                    if (data.length > 8000000) {
+                        alert('File too large (max 8MB)');
+                        return;
+                    }
 
-            // Show modal
-            showModal();
+                    // Update image
+                    bannerImg.src = data;
+                    
+                    // Show modal
+                    showModal();
+                });
         });
 
         fileInput.click();
@@ -141,8 +161,8 @@
         .then(async (response) => {
             const user = response.payload;
             
-            profileImg.src = parseMedia(user.avatar, '/img/defaults/profile_pic.png', urlOnly=true);
-            bannerImg.src = parseMedia(user.banner, '/img/defaults/banner.jpg', urlOnly=true);
+            profileImg.src = parseMedia(user.avatar_path, '/img/defaults/profile_pic.png', urlOnly=true);
+            bannerImg.src = parseMedia(user.banner_path, '/img/defaults/banner.jpg', urlOnly=true);
             usernameInput.value = user.display_name;
             usernameInput.placeholder = user.display_name;
             bioInput.value = user.biography;

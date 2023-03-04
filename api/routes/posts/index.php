@@ -147,8 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             if (strlen($media->base64data) > 8000000) // 10MB
                 Response::error(400, "File too large");
 
-            $validExtensions = ["png", "jpg", "jpeg", "gif", "mp4", "webm", "ogg", "mp3", "wav"];
-            if (!in_array($media->extension, $validExtensions))
+            if (!$media->isValid())
                 Response::error(400, "Invalid media extension");
         }
     }

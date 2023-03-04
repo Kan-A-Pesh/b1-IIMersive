@@ -29,7 +29,43 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if (isset($_POST["email"]) && !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
         Response::error(400, "Invalid email");
 
-    // TODO: Validate avatar and banner for upload
+    if (isset($_POST["avatar"])) {
+        $extension = $_POST["avatar"]["extension"];
+        $data = $_POST["avatar"]["data"];
+        $media = new Media($data, $extension);
+
+        if (!$media->isStaticImage())
+            Response::error(400, "Invalid avatar");
+
+        if (strlen($data) > 8000000) // 8MB
+            Response::error(400, "Avatar too big");
+
+        // Move image to CDN
+        $fileSnowflake = MediaSnowflake::generate($media->extension);
+        $filePath = $fileSnowflake->toFile();
+        $media->save($filePath);
+
+        $_POST["avatar"] = $fileSnowflake->toString();
+    }
+
+    if (isset($_POST["banner"])) {
+        $extension = $_POST["banner"]["extension"];
+        $data = $_POST["banner"]["data"];
+        $media = new Media($data, $extension);
+
+        if (!$media->isStaticImage())
+            Response::error(400, "Invalid banner");
+
+        if (strlen($data) > 8000000) // 8MB
+            Response::error(400, "Banner too big");
+
+        // Move image to CDN
+        $fileSnowflake = MediaSnowflake::generate($media->extension);
+        $filePath = $fileSnowflake->toFile();
+        $media->save($filePath);
+
+        $_POST["banner"] = $fileSnowflake->toString();
+    }
 
     // Update user
     $user = User::update(
@@ -38,8 +74,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         $_POST["email"] ?? null,
         null, // TODO: $_POST["password"] ?? null,
         $_POST["biography"] ?? null,
-        null, // TODO: $_POST["avatar"] ?? null,
-        null  // TODO: $_POST["banner"] ?? null
+        $_POST["avatar"] ?? null,
+        $_POST["banner"] ?? null
     );
 
     if ($user === 404)

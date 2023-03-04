@@ -22,6 +22,31 @@ class Media
         $this->extension = $extension;
     }
 
+    public function isStaticImage(): bool
+    {
+        return in_array($this->extension, ["png", "jpg", "jpeg"]);
+    }
+
+    public function isImage(): bool
+    {
+        return in_array($this->extension, ["png", "jpg", "jpeg", "gif"]);
+    }
+
+    public function isVideo(): bool
+    {
+        return in_array($this->extension, ["mp4", "webm", "ogg"]);
+    }
+
+    public function isAudio(): bool
+    {
+        return in_array($this->extension, ["mp3", "wav"]);
+    }
+
+    public function isValid(): bool
+    {
+        return $this->isImage() || $this->isVideo() || $this->isAudio();
+    }
+
     public function save(string $path): bool
     {
         $data = base64_decode($this->base64data);
