@@ -2,7 +2,7 @@
 
 > 🖥️ **Live demo:** [iimersive.kan-a-pesh.ml](https://iimersive.kan-a-pesh.ml/)
 \
-> ⚠️ **Disclaimer:** Ce projet est en cours de développement. La démo en ligne contient pour l'instant uniquement la partie front-end.
+> ⚠️ **Disclaimer:** Ce projet est en cours de développement. Il peut contenir des bugs.
 
 ## 📖 À propos
 
