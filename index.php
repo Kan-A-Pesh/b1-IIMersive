@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IIMersive</title>
 
+    <meta name="description" content="IIMersive est un projet scolaire de fin de première année à l'IIM. Il s'agit d'un réseau social permettant de partager des textes et des images, d'y ajouter des tags, commentaires et likes.">
+    <link rel="icon" href="/img/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/img/favicon.png">
+
     <link rel="stylesheet" href="/css/root.css">
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/components/index.css">
