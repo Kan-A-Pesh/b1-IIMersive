@@ -12,7 +12,7 @@
         params = {
             replyTo: "none"
         };
-        
+
         if (queryParams.q) {
             params.query = queryParams.q;
         }
@@ -244,7 +244,7 @@
         })
             .then(response => {
                 localStorage.removeItem('modalDraft');
-                loadPage("post/" + response.payload.id);
+                window.location.reload();
             });
     });
 })();
