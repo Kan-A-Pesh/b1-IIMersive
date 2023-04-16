@@ -14,8 +14,6 @@ services:
       context: .
       dockerfile: docker/Dockerfile.socket
     container_name: php-socket
-    volumes:
-      - ./api/socket:/usr/src/app
     ports:
       - 5556:80
     depends_on:
