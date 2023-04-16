@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 # Install app dependencies
 COPY ./api/socket/package*.json ./
 
-RUN npm install
+RUN [ "npm", "install" ]
 
 EXPOSE 80
 
