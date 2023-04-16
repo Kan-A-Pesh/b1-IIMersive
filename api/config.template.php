@@ -12,3 +12,8 @@ $MYSQL_SESSION_TABLE = "sessions";
 $MYSQL_MESSAGE_TABLE = "messages";
 $MYSQL_NOTIFICATION_TABLE = "notifications";
 $MYSQL_LIKE_TABLE = "likes";
+
+// ! This works for Docker only, consider using
+// ! localhost or 127.0.0.1 if not using Docker.
+$SOCKET_HOST = "host.docker.internal";
+$SOCKET_THROW = false;

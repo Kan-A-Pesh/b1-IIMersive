@@ -9,9 +9,14 @@
  */
 function sendWakeupMessage(string $handle)
 {
-    // ! This works for Docker only, consider using
-    // ! localhost or 127.0.0.1 if not using Docker.
+    global $SOCKET_HOST, $SOCKET_THROW;
 
-    $url = 'http://host.docker.internal:5556/message/' . $handle;
-    $res = file_get_contents($url);
+    try {
+        $url = "http://$SOCKET_HOST:5556/message/$handle";
+        $res = file_get_contents($url);
+    } catch (Exception $e) {
+        if ($SOCKET_THROW) {
+            throw $e;
+        }
+    }
 }
