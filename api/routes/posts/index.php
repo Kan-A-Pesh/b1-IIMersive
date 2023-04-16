@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
         foreach ($medias as $media) {
             // Check file size
-            if (strlen($media->base64data) > 8000000) // 10MB
+            if (strlen($media->base64data) > 8000000) // 8MB
                 Response::error(400, "File too large");
 
             if (!$media->isValid())
@@ -161,7 +161,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
             // Upload file
             $filePath = $fileSnowflake->toFile();
-            $media->save($filePath);
+            if (!$media->save($filePath))
+                Response::error(500, "Failed to upload file");
 
             // Clean up
             // TODO: Remove metadata

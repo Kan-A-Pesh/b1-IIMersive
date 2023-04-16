@@ -29,7 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     if ($post->media_paths !== null) {
         foreach ($post->media_paths as $media_path) {
             $snowflake = MediaSnowflake::parse($media_path);
-            Media::delete($snowflake->toFile());
+            if (Media::delete($snowflake->toFile()))
+                Response::error(500, "Failed to delete media");
         }
     }
 
