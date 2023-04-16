@@ -3,3 +3,7 @@ api/config.php
 
 # Media files
 media/
+
+# Socket edge server files
+**/node_modules
+**/npm-debug.log

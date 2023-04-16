@@ -22,14 +22,10 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: Deploy with rsync
         run: rsync -avz --exclude 'media/' ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/workspaces/iim/iimersive
-      - name: Stop previous Docker container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker stop iimersive"
-      - name: Remove previous Docker container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker rm iimersive"
-      - name: Rebuild Docker image
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker build -t php-apache-iimersive /workspaces/iim/iimersive/"
-      - name: Restart Docker container
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -d --name iimersive -p 8010:80 --mount type=bind,source=/workspaces/iim/iimersive,target=/var/www/html php-apache-iimersive"
+      - name: Stop Docker compose
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /workspaces/iim/iimersive/ && docker-compose down"
+      - name: Build and run Docker compose
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /workspaces/iim/iimersive/ && docker-compose up -d"
       - name: Fix permissions on media folder
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "chmod 777 /workspaces/iim/iimersive/media"
       - name: Cloudflare Purge Cache

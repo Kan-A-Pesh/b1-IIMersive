@@ -30,10 +30,8 @@ Vous pouvez utiliser Docker pour installer le projet.\
 Pour cela, il vous suffit de cloner le projet, puis de lancer la commande suivante :
 
 ```bash
-# Build de l'image
-docker build -t php-apache-iimersive .
-# Lancement du conteneur (nommé "iimersive")
-docker run -d --name iimersive -p 5555:80 --mount type=bind,source="$(pwd)",target=/var/www/html php-apache-iimersive
+# Lancement de l'environnement
+docker compose up -d
 ```
 
 Vous pouvez ensuite accéder au projet à l'adresse `http://localhost:5555/`.
@@ -42,7 +40,7 @@ Pour stopper et supprimer le conteneur, vous pouvez utiliser les commandes suiva
 
 ```bash
 # Arrêt du conteneur
-docker stop iimersive
+docker compose stop 
 ```
 
 ### 📦 Manuel

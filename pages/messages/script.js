@@ -234,51 +234,55 @@
     }
 
     // TODO: Get users from server
-    GET("/messages/latest")
-        .then(async (response) => {
+    const loadUsers = () => {
+        GET("/messages/latest")
+            .then(async (response) => {
 
-            clearUsersHTML();
-            
-            const buttonElement = document.createElement("div");
-            buttonElement.classList.add("user-card");
-            buttonElement.classList.add("bg-linear");
-            buttonElement.classList.add("send-message");
-
-            buttonElement.innerHTML = `<p>Envoyer un message</p>`;
-
-            buttonElement.addEventListener("click", () => {
-                modalElement.classList.add("shown");
-            });
-
-            messageUsers.appendChild(buttonElement);
-
-            let processedRecipient = [];
-
-            response.payload.forEach(async lastUserMessage => {
+                clearUsersHTML();
                 
-                // author
-                let author = lastUserMessage.author_handle;
-                if (author === USER_HANDLE)
-                    author = lastUserMessage.recipient_handle;
+                const buttonElement = document.createElement("div");
+                buttonElement.classList.add("user-card");
+                buttonElement.classList.add("bg-linear");
+                buttonElement.classList.add("send-message");
 
-                // prevent duplicates
-                if (processedRecipient.includes(author))
-                    return;
+                buttonElement.innerHTML = `<p>Envoyer un message</p>`;
 
-                processedRecipient.push(author);
+                buttonElement.addEventListener("click", () => {
+                    modalElement.classList.add("shown");
+                });
 
-                lastUserMessage.author = await parseAuthor(author);
+                messageUsers.appendChild(buttonElement);
 
-                // content
-                lastUserMessage.lastMessageContent = lastUserMessage.content;
+                let processedRecipient = [];
 
-                // date
-                lastMessageDate = parseDate(lastUserMessage.created_at);
-                lastUserMessage.lastMessageDate = lastMessageDate;
+                response.payload.forEach(async lastUserMessage => {
+                    
+                    // author
+                    let author = lastUserMessage.author_handle;
+                    if (author === USER_HANDLE)
+                        author = lastUserMessage.recipient_handle;
 
-                addUserHTML(lastUserMessage);
+                    // prevent duplicates
+                    if (processedRecipient.includes(author))
+                        return;
+
+                    processedRecipient.push(author);
+
+                    lastUserMessage.author = await parseAuthor(author);
+
+                    // content
+                    lastUserMessage.lastMessageContent = lastUserMessage.content;
+
+                    // date
+                    lastMessageDate = parseDate(lastUserMessage.created_at);
+                    lastUserMessage.lastMessageDate = lastMessageDate;
+
+                    addUserHTML(lastUserMessage);
+                });
             });
-        });
+    };
+
+    loadUsers();
 
     const closeModalElement = document.querySelector("#close-modal");
     closeModalElement.addEventListener("click", () => {
@@ -347,4 +351,11 @@
         searchRequest.open("GET", `/api/users?query=${search}`);
         searchRequest.send();
     });
+
+    socket.on("WP-MSG", (message) => {
+        loadUsers();
+        if (opennedChat) {
+            loadMessages(opennedChat);
+        }
+    })
 })()

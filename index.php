@@ -11,7 +11,10 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/components/index.css">
 
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+
     <script src="/js/api.js"></script>
+    <script src="/js/socket.js"></script>
     <script src="/js/components/postLoader.js"></script>
 
     <script defer src="/js/theme.js"></script>

@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 
 include_once(__DIR__ . "/config.php");
 
+include_once(__DIR__ . "/utils/socket/socket.php");
 include_once(__DIR__ . "/utils/res/response.php");
 include_once(__DIR__ . "/utils/database/database.php");
 include_once(__DIR__ . "/utils/security/cypher.php");

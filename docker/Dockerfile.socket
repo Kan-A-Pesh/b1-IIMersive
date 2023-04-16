@@ -1,0 +1,16 @@
+FROM node:18
+
+# Install nodemon
+RUN npm install -g nodemon
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY ./api/socket/package*.json ./
+
+RUN npm install
+
+EXPOSE 80
+
+ENTRYPOINT [ "node", "." ]

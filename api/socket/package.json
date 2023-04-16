@@ -1,0 +1,24 @@
+{
+  "name": "iimersive-socket-edge",
+  "version": "1.0.0",
+  "description": "IIMERSIVE-SOCKETS Edge server",
+  "main": "entry.js",
+  "scripts": {
+    "test": "node --watch entry.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kan-A-Pesh/school-IIMersive.git"
+  },
+  "author": "https://github.com/Kan-A-Pesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kan-A-Pesh/school-IIMersive/issues"
+  },
+  "homepage": "https://github.com/Kan-A-Pesh/school-IIMersive#readme",
+  "private": true,
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}

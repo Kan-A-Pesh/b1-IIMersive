@@ -143,6 +143,8 @@ class Message
             $message->content = $content;
             $message->created_at = new DateTime();
 
+            sendWakeupMessage($recipient_handle);
+
             return $message;
         } catch (PDOException $e) {
             return 500;
