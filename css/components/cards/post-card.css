@@ -75,41 +75,41 @@
 }
 
 .feed-post.tag-0 {
-    display: var(--filter-0);
+    display: var(--filter-0, flex);
 }
 
 .feed-post.tag-1 {
-    display: var(--filter-1);
+    display: var(--filter-1, flex);
 }
 
 .feed-post.tag-2 {
-    display: var(--filter-2);
+    display: var(--filter-2, flex);
 }
 
 .feed-post.tag-3 {
-    display: var(--filter-3);
+    display: var(--filter-3, flex);
 }
 
 .feed-post.tag-4 {
-    display: var(--filter-4);
+    display: var(--filter-4, flex);
 }
 
 .feed-post.tag-5 {
-    display: var(--filter-5);
+    display: var(--filter-5, flex);
 }
 
 .feed-post.tag-6 {
-    display: var(--filter-6);
+    display: var(--filter-6, flex);
 }
 
 .feed-post.tag-7 {
-    display: var(--filter-7);
+    display: var(--filter-7, flex);
 }
 
 .feed-post.tag-8 {
-    display: var(--filter-8);
+    display: var(--filter-8, flex);
 }
 
 .feed-post.tag-9 {
-    display: var(--filter-9);
+    display: var(--filter-9, flex);
 }

@@ -135,6 +135,16 @@ const fetchPostMetadata = async (post) => {
     return [author, liked];
 }
 
+/**
+ * Loads a post from the API and appends it to the page
+ * @param {HTMLElement} container The container to append the post to
+ * @param {string} id The UUIDv4 of the post to load
+ */
+const fetchPost = async (container, id) => {
+    const post = await GET(`/posts/${id}`);
+    const [author, liked] = await fetchPostMetadata(post.payload);
+    appendPost(container, post.payload, author, liked);
+}
 
 /**
  * Loads posts from the API and appends them to the page

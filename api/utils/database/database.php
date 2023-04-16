@@ -12,7 +12,7 @@ class Database
         try {
             // Connect to mySQL server
             self::$pdo = new PDO(
-                "mysql:host=$MYSQL_HOST;port=$MYSQL_PORT;dbname=$MYSQL_DB;charset=utf8",
+                "mysql:host=$MYSQL_HOST;port=$MYSQL_PORT;dbname=$MYSQL_DB;charset=utf8mb4",
                 $MYSQL_USER,
                 $MYSQL_PASS
             );

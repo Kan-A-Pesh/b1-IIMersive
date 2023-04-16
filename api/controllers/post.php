@@ -137,7 +137,7 @@ class Post
             $replyToQuery = "AND FK_reply_to IS NOT NULL";
         } else {
             $replyToQuery = $replyTo ?
-                "AND FK_reply_to = $replyTo" :
+                "AND FK_reply_to = '$replyTo'" :
                 null;
         }
 

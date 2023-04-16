@@ -7,17 +7,6 @@
     position: relative;
 }
 
-@media screen and (min-width: 1024px) {
-    #main {
-        display: flex;
-        flex-direction: row-reverse;
-    }
-
-    hr {
-        display: none;
-    }
-}
-
 #main>section {
     display: flex;
     flex-direction: column;
@@ -25,22 +14,21 @@
     padding: 16px;
 }
 
-hr {
-    border: none;
-    height: 1px;
-    margin: 0 64px;
-    background: var(--background-primary);
-    opacity: .65;
-}
-
 /* Main feed section */
 .posts {
     min-width: 1px;
+    height: 100%;
 }
 
-.posts>.tag-buttons {
-    min-height: 50px;
-    min-width: 1px;
+.title {
+    margin-top: 16px;
+    margin-left: 16px;
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.reply .article {
+    background: transparent!important;
 }
 
 /* Add post button */
@@ -62,25 +50,6 @@ hr {
 
 .add-post:hover {
     transform: scale(1.1);
-}
-
-/* Recommended section */
-.recommended {
-    min-width: 30vw;
-}
-
-.recommended .card>.header {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.recommended .card>.content {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
 }
 
 /* Post modal */

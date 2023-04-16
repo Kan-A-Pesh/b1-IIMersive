@@ -58,13 +58,14 @@ const loadPage = (queryString) => {
     }
 
     xhr.open('GET', `/pages/${page}/index.html`);
-    xhr.send();
 
     // Remove previous page scripts (JS)
     const previousScript = document.getElementById('page-script');
     if (previousScript) {
         previousScript.remove();
     }
+
+    xhr.send();
 
     // Update URL
     // queryString replace the first &amp; by a ? and the others by a &

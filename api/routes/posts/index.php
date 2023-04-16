@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     // Upload media
     $mediaPaths = [];
-    if ($media !== null) {
+    if ($medias !== null) {
         foreach ($medias as $media) {
             // Generate snowflake
             $fileSnowflake = MediaSnowflake::generate($media->extension);
@@ -179,7 +179,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         $tag,
         $content,
         $mediaPaths,
-        $replyToPost ?? null
+        $replyToPost->id ?? null
     );
 
     if ($post === 500)

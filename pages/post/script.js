@@ -3,6 +3,14 @@
     let loading = false;
     let end = false;
 
+    const originalPostId = queryPath[1];
+
+    console.trace(queryString, originalPostId, queryPath[1], (originalPostId) ? true : false)
+
+    // Load original post
+    const originalPostSection = document.querySelector('section.reply');
+    fetchPost(originalPostSection, originalPostId);
+
     const postSection = document.querySelector('section.posts');
 
     const loadPosts = async () => {
@@ -10,9 +18,8 @@
         loading = true;
 
         params = {
-            replyTo: "none"
+            replyTo: originalPostId
         };
-        
         if (queryParams.q) {
             params.query = queryParams.q;
         }
@@ -41,41 +48,6 @@
             }
         }
     }
-
-    /* Tag filter */
-    const tagButtons = document.querySelectorAll('section.posts>.tag-buttons>button');
-    const postContainer = document.querySelector('section.posts');
-
-    for (let i = 1; i < tagButtons.length; i++) {
-        tagButtons[i].addEventListener('click', () => {
-            applyTagFilter(i);
-        });
-    }
-
-    tagButtons[0].addEventListener('click', () => {
-        removeTagFilters();
-    });
-
-    const applyTagFilter = (tagId) => {
-        for (let i = 0; i < tagButtons.length; i++) {
-            if (i == tagId) {
-                postContainer.style.setProperty('--filter-' + (i - 1), 'flex');
-            } else {
-                postContainer.style.setProperty('--filter-' + (i - 1), 'none');
-            }
-        }
-        activateButton(tagButtons, tagId);
-    }
-
-    const removeTagFilters = () => {
-        for (let i = 0; i < tagButtons.length; i++) {
-            postContainer.style.setProperty('--filter-' + (i - 1), 'flex');
-        }
-        activateButton(tagButtons, 0);
-    }
-
-    removeTagFilters();
-
 
     /* Post modal */
     const modal = document.querySelector('div.modal');
@@ -237,10 +209,14 @@
 
     modalSubmit.addEventListener('click', () => {
         // Submit post
+
+        console.log(modalSelected);
+        
         POST('/posts', {
             tag: modalSelected.tag,
             content: modalSelected.text,
-            medias: modalSelected.medias
+            medias: modalSelected.medias,
+            replyTo: originalPostId
         })
             .then(response => {
                 localStorage.removeItem('modalDraft');
