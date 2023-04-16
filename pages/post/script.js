@@ -220,7 +220,8 @@
         })
             .then(response => {
                 localStorage.removeItem('modalDraft');
-                loadPage("post/" + response.payload.id);
+                // Reload page
+                window.location.reload();
             });
     });
 })();
