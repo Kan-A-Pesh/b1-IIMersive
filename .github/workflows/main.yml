@@ -32,3 +32,8 @@ jobs:
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -d --name iimersive -p 8010:80 --mount type=bind,source=/workspaces/iim/iimersive,target=/var/www/html php-apache-iimersive"
       - name: Fix permissions on media folder
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "chmod 777 /workspaces/iim/iimersive/media"
+      - name: Cloudflare Purge Cache
+        uses: jakejarvis/cloudflare-purge-action@v0.3.0
+        env:
+          CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+          CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
