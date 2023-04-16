@@ -110,6 +110,92 @@
     display: none;
 }
 
+.send-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 8px;
+    font-size: 1.5rem;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(var(--black-rgb), 0.5);
+    z-index: 100;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+}
+
+.modal.shown {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    padding: 16px;
+    border-radius: 16px;
+}
+
+.modal-content .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    max-height: 75vh;
+}
+
+.modal-content .header h2 {
+    font-size: 1.5rem;
+    margin-right: 16px;
+}
+
+.modal-content .header button {
+    font-size: 1.5rem;
+    padding: 4px;
+}
+
+.modal-content .header button:hover {
+    filter: brightness(2);
+}
+
+.modal-content #search {
+    width: 100%;
+    padding: 8px;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.modal-content .content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+    min-height: 50px;
+    width: 100%;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, .2);
+    border-radius: 8px;
+
+    justify-content: center;
+    align-items: stretch;
+}
+
+.modal-content .content span {
+    opacity: 0.5;
+}
+
 @media screen and (max-width: 1024px) {
     #main {
         grid-template-columns: 1fr;

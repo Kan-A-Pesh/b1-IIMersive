@@ -197,9 +197,9 @@ class User
                 $user->display_name = $result["display_name"];
                 $user->email = $result["email"];
                 $user->set_password_hash($result["passhash"]);
-                $user->biography = $result["biography"];
-                $user->avatar_path = $result["avatar_path"];
-                $user->banner_path = $result["banner_path"];
+                $user->biography = $result["biography"] ?? "";
+                $user->avatar_path = $result["avatar_path"] ?? "";
+                $user->banner_path = $result["banner_path"] ?? "";
                 $user->created_at = new DateTime($result["created_at"]);
 
                 $users[] = $user;

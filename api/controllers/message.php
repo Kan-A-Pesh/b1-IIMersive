@@ -58,6 +58,7 @@ class Message
 
             return $messages;
         } catch (PDOException $e) {
+            echo $e->getMessage();
             return 500;
         }
     }
@@ -147,5 +148,4 @@ class Message
             return 500;
         }
     }
-    
 }
