@@ -31,4 +31,4 @@ jobs:
       - name: Restart Docker container
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "docker run -d --name iimersive -p 8010:80 --mount type=bind,source=/workspaces/iim/iimersive,target=/var/www/html php-apache-iimersive"
       - name: Fix permissions on media folder
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "chmod -R 775 /workspaces/iim/iimersive/media"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "chmod 777 /workspaces/iim/iimersive/media"
