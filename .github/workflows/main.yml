@@ -23,9 +23,9 @@ jobs:
       - name: Deploy with rsync
         run: rsync -avz --exclude 'media/' ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/workspaces/iim/iimersive
       - name: Stop Docker compose
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /workspaces/iim/iimersive/ && docker-compose down"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /workspaces/iim/iimersive/ && docker compose down"
       - name: Build and run Docker compose
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /workspaces/iim/iimersive/ && docker-compose up -d"
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /workspaces/iim/iimersive/ && docker compose up -d"
       - name: Fix permissions on media folder
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "chmod 777 /workspaces/iim/iimersive/media"
       - name: Cloudflare Purge Cache
