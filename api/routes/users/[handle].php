@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         // Move image to CDN
         $fileSnowflake = MediaSnowflake::generate($media->extension);
         $filePath = $fileSnowflake->toFile();
-        if ($media->save($filePath))
+        if (!$media->save($filePath))
             Response::error(500, "Failed to save avatar");
 
         $_POST["avatar"] = $fileSnowflake->toString();
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
         // Move image to CDN
         $fileSnowflake = MediaSnowflake::generate($media->extension);
         $filePath = $fileSnowflake->toFile();
-        if ($media->save($filePath))
+        if (!$media->save($filePath))
             Response::error(500, "Failed to save banner");
 
         $_POST["banner"] = $fileSnowflake->toString();
