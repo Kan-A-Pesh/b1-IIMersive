@@ -1,4 +1,4 @@
-nav {
+header {
     height: 50px;
     width: 100%;
 
@@ -11,25 +11,25 @@ nav {
     gap: 8px;
 }
 
-nav>h2 {
+header > h2 {
     margin-right: auto;
 }
 
-nav .input {
+header .input {
     background: rgba(255, 255, 255, 0.1);
 }
 
-nav img {
+header img {
     cursor: pointer;
-    opacity: .85;
+    opacity: 0.85;
 }
 
-nav img:hover {
+header img:hover {
     opacity: 1;
 }
 
 @media screen and (min-width: 768px) {
-    nav .menu {
+    header .menu {
         display: none;
     }
 }

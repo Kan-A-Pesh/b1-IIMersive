@@ -11,6 +11,8 @@ Il s'agit d'un réseau social permettant de partager des textes et des images, d
 Le projet est réalisé avec un front-end en HTML/CSS/JS natif, sauf pour les pages de connexion et d'inscription qui sont réalisées à l'aide de Bootstrap.\
 Le back-end est réalisé en PHP natif, avec une base de données MySQL.
 
+La maquette du site est disponible sur [Figma](https://www.figma.com/file/37xNiCB3xBoM2A61p9RUyR/Projet-d'AXE---IIMersive?type=design&node-id=0%3A1&t=Aqw4q6wUqEz5Z2yJ-1).\
+
 Pour plus d'informations sur l'avancement du projet, vous pouvez consulter le [Trello](https://trello.com/b/rL5aaxOq/iimersive-todo).
 
 ## 🖥️ IoT

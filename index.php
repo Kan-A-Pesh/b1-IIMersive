@@ -30,17 +30,17 @@
 </head>
 
 <body>
-    <nav>
+    <header>
         <h2><span class="color-primary">IIM</span>ersive</h2>
         <div class="input">
             <input type="text" placeholder="Recherche" id="search-input">
             <img class="icons" src="/img/icons/search.svg" alt="🔎" id="search-submit">
         </div>
         <img class="icons menu" src="/img/icons/menu.svg" alt="☰">
-    </nav>
+    </header>
 
     <div id="app">
-        <section class="sidebar">
+        <aside class="sidebar">
             <div class="profile-card anon-hidden">
                 <img src="/img/placeholders/loading.gif" alt="Profile picture">
                 <div class="profile-info">
@@ -99,7 +99,7 @@
                     <h2>Se déconnecter</h2>
                 </div>
             </div>
-        </section>
+        </aside>
 
         <main id="main">
 
