@@ -1,7 +1,6 @@
 # IIMersive
 
-> 🖥️ **Live demo:** [iimersive.kan-a-pesh.ml](https://iimersive.kan-a-pesh.ml/)
-\
+> 🖥️ **Live demo:** [iimersive.kan-a-pesh.ml](https://iimersive.kan-a-pesh.ml/) > \
 > ⚠️ **Disclaimer:** Ce projet est en cours de développement. Il peut contenir des bugs.
 
 ## 📖 À propos
@@ -13,6 +12,13 @@ Le projet est réalisé avec un front-end en HTML/CSS/JS natif, sauf pour les pa
 Le back-end est réalisé en PHP natif, avec une base de données MySQL.
 
 Pour plus d'informations sur l'avancement du projet, vous pouvez consulter le [Trello](https://trello.com/b/rL5aaxOq/iimersive-todo).
+
+## 🖥️ IoT
+
+Le projet possède une partie IoT, le code est disponible dans le dossier `iot/`.\
+Il s'agit d'un script Python pour Raspberry Pi permettant d'intéragir avec le site web.\
+Notez qu'il est nécessaire d'avoir un compte `raspberrypi` sur le site pour pouvoir utiliser le script.\
+Plus d'informations dans le fichier [`iot/main.py`](iot/main.py).
 
 ## ⚡️ Installation
 
@@ -40,7 +46,7 @@ Pour stopper et supprimer le conteneur, vous pouvez utiliser les commandes suiva
 
 ```bash
 # Arrêt du conteneur
-docker compose stop 
+docker compose stop
 ```
 
 ### 📦 Manuel
@@ -57,36 +63,36 @@ Vous devez ensuite cloner le projet dans le dossier de votre serveur web.
 
 ## 📝 Fonctionnalités
 
-- Connexion/Inscription
-- Création de posts
-- Ajout de tags à la création d'un post
-- Ajout de commentaires à un post
-- Ajout de likes à un post
-- Recherche de posts par tags, mots-clés ou utilisateurs
-- Affichage des posts les plus populaires
-- Affichage des comptes les plus populaires
-- Bien plus à venir...
+-   Connexion/Inscription
+-   Création de posts
+-   Ajout de tags à la création d'un post
+-   Ajout de commentaires à un post
+-   Ajout de likes à un post
+-   Recherche de posts par tags, mots-clés ou utilisateurs
+-   Affichage des posts les plus populaires
+-   Affichage des comptes les plus populaires
+-   Bien plus à venir...
 
 Pour plus d'informations sur le suivi du projet, vous pouvez consulter le [Trello](https://trello.com/b/rL5aaxOq/iimersive-todo).
 
 ## 📂 Structure du projet
 
-- `api/` : Contient les fichiers PHP permettant de gérer les requêtes AJAX
-- `css/` : Contient les fichiers CSS
-- `fonts/` : Contient les fichiers de polices
-- `img/` : Contient les images
-- `js/` : Contient les fichiers JS
-- `pages/` : Contient les pages HTML (îles)
-- `index.html` : Page d'accueil
-- `login.html` : Page de connexion
-- `register.html` : Page d'inscription
-- `README.md` : Fichier README (ce fichier)
+-   `api/` : Contient les fichiers PHP permettant de gérer les requêtes AJAX
+-   `css/` : Contient les fichiers CSS
+-   `fonts/` : Contient les fichiers de polices
+-   `img/` : Contient les images
+-   `js/` : Contient les fichiers JS
+-   `pages/` : Contient les pages HTML (îles)
+-   `index.html` : Page d'accueil
+-   `login.html` : Page de connexion
+-   `register.html` : Page d'inscription
+-   `README.md` : Fichier README (ce fichier)
 
 ## 📚 Bibliothèques utilisées
 
-- [Bootstrap](https://getbootstrap.com/) : Utilisé pour la page de connexion et d'inscription uniquement
-- [Feather Icons](https://feathericons.com/) : Utilisé pour les icônes du site
-- [Google Fonts](https://fonts.google.com/) : Utilisé pour les polices du site (Montserrat)
+-   [Bootstrap](https://getbootstrap.com/) : Utilisé pour la page de connexion et d'inscription uniquement
+-   [Feather Icons](https://feathericons.com/) : Utilisé pour les icônes du site
+-   [Google Fonts](https://fonts.google.com/) : Utilisé pour les polices du site (Montserrat)
 
 ## 📝 License
 

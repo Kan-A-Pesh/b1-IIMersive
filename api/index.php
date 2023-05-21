@@ -20,6 +20,7 @@ $routes = [
     "posts" => "posts/index.php",
     "posts/:id" => "posts/[id]/index.php",
     "posts/:id/like" => "posts/[id]/like.php",
+    "iot" => "iot/index.php",
 ];
 
 // Re-route request to correct file
