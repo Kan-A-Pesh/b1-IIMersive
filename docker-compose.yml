@@ -18,3 +18,16 @@ services:
       - 5556:80
     depends_on:
       - apache
+  monsql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: iimersive
+      MYSQL_USER: iimersive
+      MYSQL_PASSWORD: sup3erS3cr3t
+    ports:
+      - 5557:3306
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
