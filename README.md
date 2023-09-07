@@ -1,8 +1,5 @@
 # IIMersive
 
-> 🖥️ **Live demo:** [iimersive.kan-a-pesh.ml](https://iimersive.kan-a-pesh.ml/) > \
-> ⚠️ **Disclaimer:** Ce projet est en cours de développement. Il peut contenir des bugs.
-
 ## 📖 À propos
 
 IIMersive est un projet scolaire de fin de première année à l'IIM.\
