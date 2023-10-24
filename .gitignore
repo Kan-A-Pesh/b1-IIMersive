@@ -7,6 +7,3 @@ media/
 # Socket edge server files
 **/node_modules
 **/npm-debug.log
-
-# Docker config files
-docker/mysql
