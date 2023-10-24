@@ -20,14 +20,8 @@ jobs:
           known_hosts: unnecessary
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-      - name: Deploy with rsync
-        run: rsync -avz --exclude 'media/' ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/workspaces/iim/iimersive
-      - name: Stop Docker compose
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /workspaces/iim/iimersive/ && docker compose down"
-      - name: Build and run Docker compose
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /workspaces/iim/iimersive/ && docker compose up -d"
-      - name: Fix permissions on media folder
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "chmod 777 /workspaces/iim/iimersive/media"
+      - name: Deploy
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd /workspaces/iim/iimersive/ && git checkout master && git pull && docker compose down && docker compose up -d && exit"
       - name: Cloudflare Purge Cache
         uses: jakejarvis/cloudflare-purge-action@v0.3.0
         env:
